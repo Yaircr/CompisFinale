@@ -1,8 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+                    INSTITUTO POLITECNICO NACIONAL
+                     ESCUELA SUPERIOR DE COMPUTO
+                            COMPILADORES
+                           PROYECTO FINAL
+                                3CM6
+                              ALUMNOS:
+                    CUELLAR RIVERA EDUARDO YAIR
+                     GARCIA VERA JARED ALBERTO
+                     HERNANDEZ MEJIA DIEGO YAIR
+                                
+*/
 package com.eycr.utilities;
 
 import com.eycr.automaton.InterfaceStates;
@@ -13,10 +20,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
 
-/**
- *
- * @author firem
- */
 public class StateHandlers implements Collection,List{
     private HashMap<Integer,InterfaceStates> content;
     

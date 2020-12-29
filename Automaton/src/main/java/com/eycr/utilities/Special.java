@@ -1,8 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+                    INSTITUTO POLITECNICO NACIONAL
+                     ESCUELA SUPERIOR DE COMPUTO
+                            COMPILADORES
+                           PROYECTO FINAL
+                                3CM6
+                              ALUMNOS:
+                    CUELLAR RIVERA EDUARDO YAIR
+                     GARCIA VERA JARED ALBERTO
+                     HERNANDEZ MEJIA DIEGO YAIR
+                                
+*/
 package com.eycr.utilities;
 
 
@@ -14,10 +21,6 @@ import com.eycr.automaton.Transition;
 import java.util.HashMap;
 import java.util.Iterator;
 
-/**
- *
- * @author firem
- */
 public class Special {
     public void unir(HashMap<Integer,AFN> afns)
     {

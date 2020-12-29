@@ -1,17 +1,20 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+                    INSTITUTO POLITECNICO NACIONAL
+                     ESCUELA SUPERIOR DE COMPUTO
+                            COMPILADORES
+                           PROYECTO FINAL
+                                3CM6
+                              ALUMNOS:
+                    CUELLAR RIVERA EDUARDO YAIR
+                     GARCIA VERA JARED ALBERTO
+                     HERNANDEZ MEJIA DIEGO YAIR
+                                
+*/
 package com.eycr.grammatics;
 
 import com.eycr.lexic.LexicAnalyzer;
 import com.eycr.utilities.Const;
 
-/**
- *
- * @author art
- */
 public class GrammarGenerator {
     private LexicAnalyzer lexic;
     boolean G(Grammar g){
