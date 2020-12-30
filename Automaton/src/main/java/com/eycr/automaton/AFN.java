@@ -27,19 +27,37 @@ public class AFN implements InterfaceAFN{
     private Alpha alphabet;
     static Integer counterAFN=0;
     private Integer idAFN;
-
+    
+    /*
+        @return counterAFN contador
+    */
     public static Integer getCounterAFN() {
         return counterAFN;
     }
-
+    
+    /*
+        @param counterAFN establece el indice del contador
+    */
     public static void setCounterAFN(Integer counterAFN) {
         AFN.counterAFN = counterAFN;
     }
-
+    
+    /*
+        Constructor para el AFN basico con dos caracteres
+        @param c
+        @param c0
+    */
     public AFN(char c, char c0) {
         init();
         createBasic(c,c0);
     }
+    
+    /*
+        Metodo para crear un AFN basico con sus estados y transiciones de a -> b
+        Con estado actual en el primero y dejando como aceptacion el segundo
+        @param a
+        @param b
+    */
     public void createBasic(Character a,Character b)
     {
         for (int i = a; i <= b; i++)
@@ -56,15 +74,26 @@ public class AFN implements InterfaceAFN{
         states.add(state2);
         acceptedStates.add(state2);
     }
-
+    
+    /*
+        Regresa el id del AFN
+        @return idAFN
+    */
     public Integer getId() {
         return idAFN;
     }
-
+    
+    /*
+        Establece el id del AFN
+        @param idAFN
+    */
     public void setIdAFN(Integer idAFN) {
         this.idAFN = idAFN;
     }
     
+    /*
+        Inicializa un AFN en blanco
+    */
     private void init()
     {
         idAFN=counterAFN++;
@@ -73,23 +102,32 @@ public class AFN implements InterfaceAFN{
         //currentState=new State(false);
         alphabet=new Alpha();
     }
+    /*
+        Constructor basico de inicializacion
+    */
     public AFN()
     {
         init();
     }
+    
+    /*
+        Genera un automata simple a partir de un solo simbolo
+        Se agrega un simbolo al alfabeto, se crean estados inicial y final y se crea la transicion correspondiente
+        @param symbol
+    */
     public AFN(Character symbol)
     {
-        /*
-        * Genera un automata simple a partir de un solo simbolo
-        * 1.- Agregamos el simbolo al alfabeto
-        * 2.- Creamos los estados incial y final
-        * 3.- Creamos la transición del estado 1 al 2
-        */
+        
         init();
         createBasic(symbol);
         
         
     }
+    /*
+        Constructor de AFN con simbolo y token
+        @param symbol
+        @param token
+    */
     public AFN(Character symbol,Integer token)
     {
         init();
@@ -105,7 +143,11 @@ public class AFN implements InterfaceAFN{
         acceptedStates.add(state2);
         currentState=state1;
     }
-
+    
+    /*
+        Asociar token un con un elemento de aceptacion del AFN
+        @param token
+    */
     public void associateToken(Integer token)
     {
         for(InterfaceStates s:acceptedStates)
@@ -113,6 +155,11 @@ public class AFN implements InterfaceAFN{
             s.setToken(token);
         }
     }
+    
+    /*
+        Operador opcional
+        Crea una transicion opcional mediante transiciones epsilon
+    */
     @Override
     public void optional() {
         State newInitialState = new State(false);
@@ -127,18 +174,16 @@ public class AFN implements InterfaceAFN{
         states.add(newFinalState);
     }
 
+    /*
+        Concatenar dos AFN
+        Une el alfabeto de dos automatas, elige el estado final del automata en caso de que haya mas de uno.
+        Quita el caracter del estado final que corresponda al estado anterior de aceptacion
+        Agrega una transicion al nuevo estado final y copia las transiciones del estado inicial del primer automata
+        Elimina el estado inicial del segundo automata, se agregan los nuevos estados del automata recibido y se configuran los estados finales
+        @param automata
+    */
     @Override
     public void concatenateAFN(InterfaceAFN automata) {
-        /*
-        * Cerradura positiva
-        * 1.- Unimos los alfabetos de los 2 automatas
-        * 2.- Elegimos el estado final de este automata en caso de que haya mas de uno
-        * 3.- Quitamos el caracter de estado fina al ese estado del paso 2
-        * 4.- Agregamos transiion al estado final elegido opiando las transiiones del estado iniial del automata reibido
-        * 5.- Eliminamos estado iniial del automata reibido
-        * 6.- Anadimos estados del automata 2
-        * 7.- Anadimos estados finales del automata                                         
-        */
         Integer selected;  
         State finalState1;
         AFN af=(AFN)automata;
@@ -158,20 +203,25 @@ public class AFN implements InterfaceAFN{
         acceptedStates.addAll(af.getAcceptedStates());
         states.add(finalState1);
     }
+    /*
+        Elige el estado final con un valor de -1
+    */
     public Integer selectFinalState()
     {
         return -1;
     }
+    
+    /*
+        Union por Thompson
+        @param automata
+        Unir los alfabetos de ambos idiomas
+        Crear nuevos estados iniciales y finales.
+        Crear transiciones epsilon de inicial nuevo al original
+        Crear transiciones epsilon de final original al nuevo
+    */
     @Override
     public void addAFN(InterfaceAFN automata) {
-        /*
-        * Unir un automata con el actual por Thompson
-        * 1.- Unimos los alfabetos de los 2 automatas
-        * 2.- Creamos un nuevo estado inicial
-        * 3.- Creamons un nuevo estado final
-        * 4.- Creamos transiciones epsilon del estado inicial a los estados iniciales anteriores
-        * 5.- Creamos transiciones epsilon de los estados finales anteriores al nuevo estado final
-        */
+        
         AFN af=(AFN)automata;
         this.alphabet.addAlpha(af.getAlpha());
         State newIniState=new State(false);
@@ -194,6 +244,11 @@ public class AFN implements InterfaceAFN{
         //acceptedStates.clear();
         //acceptedStates.add(newFinalState);
     }
+    
+    /*
+        Agregar estados de aceptacion
+        
+    */
     public void addAcceptedState(AFN afn,State newFinalState)
     {
         Iterator<State> its1=afn.getAcceptedStates().iterator();
@@ -205,22 +260,18 @@ public class AFN implements InterfaceAFN{
         }
         afn.acceptedStates.clear();
         afn.acceptedStates.add(newFinalState);
-        /*
-        *Un AFnD puede tener más de un estado de aceptación, por lo tanto si es general me parece que 
-        *quitarle los estados de aceptación, pero si es un automata de Thompson es correcto
-        */
 
     }
-
+    
+    
+    /*
+        Cerradura Positiva
+        Crear nuevos estados inicial y final
+        Crear transiciones epsilon de inicial nuevo al original
+        Crear transiciones epsilon de final original al nuevo
+    */
     @Override
     public void positiveClosure() {
-        /*
-        * Cerradura positiva
-        * 1.- Creamos un nuevo estado inicial
-        * 2.- Creamons un nuevo estado final
-        * 3.- Creamos transiciones epsilon del nuevo estado inicial al estado inicial anterior
-        * 4.- Creamos transiciones epsilon de los estados finales anteriores al nuevo estado final
-        */
         State newInitialState = new State(false);
         State newFinalState = new State(true);
         State actualInitialState=(State)currentState;
@@ -236,12 +287,16 @@ public class AFN implements InterfaceAFN{
         states.add(newFinalState);
 
     }
-
+    
+    /*
+        Cerradura de Kleene
+        
+    */
     @Override
     public void kleenClosure() {
         positiveClosure();
         if(acceptedStates.size()!=1){
-            System.out.println("More than one final state or the collection is empty");
+            System.out.println("Hay mas de un estado final vacio");
         } else{
             Iterator<State> iterator=this.getAcceptedStates().iterator();
             State actualAcceptedState=iterator.next();
@@ -249,7 +304,12 @@ public class AFN implements InterfaceAFN{
             currentState.addTransition(transition);
        }
     }
-
+    
+    /*
+        Analizar si una cadena pertenece al AFN
+        @param string
+        @return true o false si corresponde
+    */
     @Override
     public Boolean analizeString(String string) {
         Collection<InterfaceStates> states;
@@ -264,38 +324,84 @@ public class AFN implements InterfaceAFN{
         }
         return false;
     }
-
+    
+    /*
+        Recuperar estados de aceptacion
+        @return acceptedStates
+    */
     public Collection<State> getAcceptedStates() {
         return acceptedStates;
     }
-
+    
+    /*
+        Establece los estados de aceptacion a partir de una coleccion de estados
+        @param acceptedStates
+    */
     public void setAcceptedStates(Collection<State> acceptedStates) {
         this.acceptedStates = acceptedStates;
     }
-
+    
+    /*
+        Recupera los estados en forma de coleccion de estados
+        @return states
+    */
     public Collection<State> getStates() {
         return states;
     }
 
+    /*
+        Define todos los estados a incluir mediante una coleccion de estados
+        @param states
+    */
     public void setStates(Collection<State> states) {
         this.states = states;
     }
-
+    
+    /*
+        Recuperar el estado actual
+        @return currentState
+    */
     public InterfaceStates getCurrentState() {
         return currentState;
     }
-
+    
+    /*
+        Establece el estado actual
+        @param currentState
+    */
     public void setCurrentState(InterfaceStates currentState) {
         this.currentState = currentState;
     }
-
+    
+    /*
+        Recupera el Alfabeto perteneciente al AFN
+        @return alphabet
+    */
     public Alpha getAlpha() {
         return alphabet;
     }
 
+    /*
+        Establece el alfabeto del AFN
+        @param alphabet
+        @see Alpha
+    */
     public void setAlpha(Alpha alphabet) {
         this.alphabet = alphabet;
     }
+    
+    /*
+        Regresa el AFN en formato de cadena
+        @return una cadena con la sintaxis de 
+        AUTOMATA::
+        (TABLA AFD)
+        --STATES--
+        (ESTADOS)
+        --CURRENT STATE--
+        (ESTADO ACTUAL)
+        --FINAL STATES--
+        (ESTADOS FINALES DE ACEPTACION)
+    */
     @Override
     public String toString()
     {
@@ -320,15 +426,26 @@ public class AFN implements InterfaceAFN{
         return info;
     }
     
-    
+    /*
+        Recupera el estado inicial
+        @return currentState
+    */
     public InterfaceStates getInitialState() {
         return currentState;
     }
 
+    /*
+        Establece el estado inicial
+        @param currentState
+    */
     public void setInitialState(InterfaceStates currentState) {
         this.currentState = currentState;
     }
     
+    /*
+        Operador Cerradura Epsilon mediante colecciones
+        @param states todos los estados agrupados en coleccion de estados
+    */
     public Collection<InterfaceStates> epsilonClausure(Collection<InterfaceStates> states){
         Collection<InterfaceStates> c;
         c=new HashSet<>();
@@ -338,8 +455,11 @@ public class AFN implements InterfaceAFN{
         return c;
     }
     
+    /*
+        Operador Cerradura Epsilon mediante un estado unico
+        @param state
+    */
     public Collection<InterfaceStates> epsilonClausure(InterfaceStates state){
-        //System.out.println("Entra a letodo epsilon");
         Stack<InterfaceStates> stack= new Stack<InterfaceStates>();
         stack.push(state);
         InterfaceStates e=null;
@@ -361,16 +481,25 @@ public class AFN implements InterfaceAFN{
                 continue;
             }
         }
-        //System.out.println("Termina");
         return c;
     }
     
+    /*
+        Recupera un estado mediante un identificador
+        @param id
+        @return id
+    */
     public InterfaceStates getStateById(int id){
         StateHandlers sc=(StateHandlers)states;
         return (InterfaceStates)sc.get(id);
         
     }
-    
+        
+    /*
+        Recupera los ID de todos los estados
+        @param ids
+        @return states en formato de coleccion
+    */
     public Collection<InterfaceStates> getStatesByIds(Collection<Integer> ids){
         //1System.out.println("Aqui ");
         Collection<InterfaceStates> states;
@@ -381,6 +510,12 @@ public class AFN implements InterfaceAFN{
         return states;
     }
     
+    /*
+        Operacion mover
+        @param states coleccion
+        @param symbol
+        @return moveStates
+    */
     public Collection<InterfaceStates> move(Collection<InterfaceStates> states, Character symbol){
         Collection<InterfaceStates> moveStates;
         moveStates=new HashSet<>();
@@ -390,7 +525,12 @@ public class AFN implements InterfaceAFN{
         return moveStates;
     }
     
-     
+    /*
+        Operacion mover
+        @param states 
+        @param c
+        @return r
+    */
     public Collection<InterfaceStates> move(InterfaceStates e,Character c)
     {
         Collection<InterfaceStates> r=new StateHandlers();
@@ -404,15 +544,30 @@ public class AFN implements InterfaceAFN{
         return r;
     }
     
+    /*
+        Operacion ir A
+        @param states
+        @param symbol
+        @return epsilonClausure
+    */
     public Collection<InterfaceStates> goTo(Collection<InterfaceStates> states, Character symbol){
         return epsilonClausure(move(states, symbol));
     }
     
+    /*
+        Operacion ir A
+        @param state
+        @param symbol
+        @return epsilonClausure
+    */
     public Collection<InterfaceStates> goTo(InterfaceStates state, Character symbol){
         return epsilonClausure(move(state, symbol));
     }
     
-    
+    /*
+        Asignar un codigo Hash
+        @return hash
+    */
     @Override
     public int hashCode() {
         int hash = 3;
@@ -420,6 +575,11 @@ public class AFN implements InterfaceAFN{
         return hash;
     }
 
+    /*
+        Verificar igualdad
+        @param obj
+        @return true o false si es igual
+    */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -437,6 +597,11 @@ public class AFN implements InterfaceAFN{
         }
         return true;
     }
+    
+    /*
+        Crear un AFN basico a partir de un unico simbolo
+        @param symbol
+    */
     public void createBasic(Character symbol)
     {
         alphabet.addElement(symbol);

@@ -17,6 +17,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Converter {
+    /*
+        Convierte un AFN a AFD 
+        @param afn
+        @return afd
+    */
     public AFD convertAFN(InterfaceAFN afn)
     {
         int i=0;
@@ -53,6 +58,10 @@ public class Converter {
         AFD afd=new AFD(sc,afn.getAlpha());
         return afd;
     }
+    /*
+        Revisa si existe un estado final
+        @return -1 o el token del estado final correspondiente
+    */
     public Integer hasFinalState(Collection s,InterfaceAFN afn)
     {
         for(InterfaceStates state:afn.getStates())

@@ -13,5 +13,8 @@
 package com.eycr.automaton;
 
 public interface InterfaceAFD extends InterfaceAutomaton {
+    /*
+        Obtener la tabla de un AFD
+    */
     public TableAFD getTable();
 }

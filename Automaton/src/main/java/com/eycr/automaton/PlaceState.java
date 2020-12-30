@@ -17,6 +17,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Objects;
 
+/*
+    Manejador del posicionamiento de los estados
+*/
+
 public class PlaceState {
     private Collection<InterfaceStates> states;
     private int id;
@@ -24,7 +28,13 @@ public class PlaceState {
     private boolean accepted;
     private boolean analyzed;
     private Collection<Transition> transitions;
-
+    
+    /*
+        Agregar transicion
+        @param t Transicion
+        @see Transition
+        @return true o false segun se pudo agregar
+    */
     public Boolean addTransition(Transition t)
     {
         if(!transitions.contains(t))
@@ -40,29 +50,57 @@ public class PlaceState {
         return false;
     }
     
+    /*
+        Obtener las transiciones
+        @return transitions
+    */
     public Collection<Transition> getTransitions() {
         return transitions;
     }
 
+    /*
+        Establece las transiciones
+        @param transitions
+    */
     public void setTransitions(Collection<Transition> transitions) {
         this.transitions = transitions;
     }
     
+    /*
+        Recupera el id de la transicion
+        @return id
+    */
     public int getId() {
         return id;
     }
 
+    /*
+        Establece el id de la transicion
+        @param id
+    */
     public void setId(int id) {
-        //id++;
+        
         this.id = id;
     }
 
+    /*
+        Constructor mediante coleccion
+        @param states
+    */
     public PlaceState(Collection<InterfaceStates> states) {
         this.states = states;
         transitions=new ArrayList<>();
         updateAcceptedState();
     }
 
+    /*
+        Constructor mediante parametros individuales mas detallados
+        @param states
+        @param initial
+        @param accepted
+        @param analyzed
+        @param id
+    */
     public PlaceState(Collection<InterfaceStates> states, boolean initial, boolean accepted, boolean analyzed, int id) {
         this.states = states;
         this.initial = initial;
@@ -73,38 +111,74 @@ public class PlaceState {
         updateAcceptedState();
     }
 
+    /*
+        Recuperar los estados
+        @return states
+    */
     public Collection<InterfaceStates> getStates() {
         return states;
     }
 
+    /*
+        Establecer los estados
+        @param states
+    */
     public void setStates(Collection<InterfaceStates> states) {
         this.states = states;
     }
 
+    /*
+        es un estado inicial?
+        @return initial boolean
+    */
     public boolean isInitial() {
         return initial;
     }
 
+    /*
+        define si es inicial
+        @param initial
+    */
     public void setInitial(boolean initial) {
         this.initial = initial;
     }
-
+    
+    /*
+        es estado de aceptacion?
+        @return accepted
+    */
     public boolean isAccepted() {
         return accepted;
     }
 
+    /*
+        Define estado de aceptacion
+        @param accepted boolean
+    */
     public void setAccepted(boolean accepted) {
         this.accepted = accepted;
     }
 
+    /*
+        se analizo?
+        @return analyzed
+    */
     public boolean isAnalyzed() {
         return analyzed;
     }
 
+    /*
+        Determina el estado como analizado
+        @param analyzed boolean
+    */
     public void setAnalyzed(boolean analyzed) {
         this.analyzed = analyzed;
     }
-
+    
+    /*
+        Poner codigo Hash
+        @return hash
+    */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -116,9 +190,14 @@ public class PlaceState {
         return hash;
     }
 
+    /*
+        Es igual?
+        @param obj
+        @return true o false segun el resultado
+    */    
     @Override
     public boolean equals(Object obj) {
-        //System.out.println("Holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        
         if (this == obj) {
             return true;
         }
@@ -163,7 +242,10 @@ public class PlaceState {
         return true;
     }
    
-    
+    /*
+        Convertir el listado de propiedades del estado a cadena
+        @return info
+    */
     @Override
     public String toString()
     {
@@ -183,6 +265,9 @@ public class PlaceState {
         return info;
     }
     
+    /*
+        actualizar estado de aceptacion si es un estado final
+    */
     public void updateAcceptedState(){
         for(InterfaceStates state: states){
             if(state.isFinal()){

@@ -18,28 +18,55 @@ public class TableAFD {
     Integer[][] tableTransition;
     HashMap<Character,Integer> symbols;
     Integer numberOfStates;
+    
+    /*
+        Regresa la tabla de transiciones
+        @return tableTransition arreglo bidimensional de integers
+    */
     public Integer[][] getTableTransition() {
         return tableTransition;
     }
 
+    /*
+        Define las transiciones de la tabla
+        @param tableTransition
+    */
     public void setTableTransition(Integer[][] tableTransition) {
         this.tableTransition = tableTransition;
     }
 
+    /*
+        Recupera simbolos segun el hash
+        @return symbols
+    */
     public HashMap<Character,Integer> getSymbols() {
         return symbols;
     }
 
+    /*
+        Define los simbolos
+        @param symbols en un hashmap
+    */
     public void setSymbols(HashMap<Character,Integer> symbols) {
         this.symbols = symbols;
     }
     
 
+    /*
+        Constructor de la tabla
+        @param tableTransition
+        @param symbols
+    */
     public TableAFD(Integer[][] tableTransition, HashMap<Character,Integer> symbols) {
         this.tableTransition = tableTransition;
         this.symbols = symbols;
     }
 
+    /*
+        Constructor de la tabla
+        @param afd un AFD completo
+        Segun los estados, sus simbolos y transiciones se recorre el AFD para crear la table en las posiciones que correspondan
+    */
     public TableAFD(AFD afd) {
         numberOfStates=afd.getStates().size();
         this.tableTransition = new Integer[afd.getStates().size()][afd.getAlpha().getSymbols().size()+1];
@@ -62,10 +89,21 @@ public class TableAFD {
             tableTransition[state.getId()][j]=state.getToken();
         }
     }
+    
+    /*
+        Obtiene el siguiente estado
+        @param actualState
+        @param c
+        @return tableTransition
+    */
     public Integer nextState(Integer actualState,Character c)
     {
         return tableTransition[actualState][symbols.get(c)];
     }
+    
+    /*
+        Imprimir la tabla
+    */
     public void print()
     {
         System.out.println("Tabla:");
