@@ -27,19 +27,33 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-
+/*
+    Clase para mostrar el menu
+*/
 public class ConsoleMenu {
-    private HashMap<Integer,AFN> afns;
-    private AFD afd;
+    private HashMap<Integer,AFN> afns; //HASH de AFNS
+    private AFD afd;    //AFD
+    
+/*
+    Constructor del menu de consola
+    Crea el Hash Map para los AFN'S
+*/    
     public ConsoleMenu(){
         afns=new HashMap<>();
         
     }
+/*
+    Metodo ejecutable
+    Se crea menu y posteriormente se muestra
+*/    
     public static void main(String[] args)
     {
         ConsoleMenu menu=new ConsoleMenu();
         menu.show();
     }
+/*
+    Metodo para mostrar el Menu
+*/
     public void show()
     {
         Scanner sc=new Scanner(System.in);
@@ -169,6 +183,7 @@ public class ConsoleMenu {
             }    
         }
     }
+    
     public AFN selectAutomata()
     {
         Scanner sc=new Scanner(System.in);

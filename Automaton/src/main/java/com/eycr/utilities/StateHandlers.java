@@ -20,23 +20,39 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
 
+/*
+    Clase para la creación de un HASHMAP
+*/
 public class StateHandlers implements Collection,List{
-    private HashMap<Integer,InterfaceStates> content;
-    
+    private HashMap<Integer,InterfaceStates> content; //HASH de Interfaces
+/*
+    Constructor del HASH
+*/    
     public StateHandlers()
     {
         content=new HashMap<>();
     }
+    
+/*
+    Metodo para obtener el tamaño del HASH
+    @return content.size(): Tamaño del HASH
+*/    
     @Override
     public int size() {
         return content.size();
     }
-
+/*
+    Metodo para saber si el HASH esta vacio
+    @return content.size(): TRUE o FALSE dependiendo si el HASH esta vacio o no
+*/    
     @Override
     public boolean isEmpty() {
         return content.isEmpty();
     }
-
+/*
+    Metodo para saber si una clave ya existe en el HASH
+    @return content.containsKey(s.getId()): TRUE o FALSE dependiendo si la clave ya existe o no en el HASH
+*/ 
     @Override
     public boolean contains(Object o) {
         if(!(o instanceof InterfaceStates))
@@ -44,7 +60,10 @@ public class StateHandlers implements Collection,List{
         InterfaceStates s=(InterfaceStates)o;
         return content.containsKey(s.getId());
     }
-
+/*
+    Metodo para obtener valores de iteradores dentro del HASH
+    @return content.values().iterator(): Valores de los iteradores de HASH
+*/
     @Override
     public Iterator iterator() {
        return content.values().iterator();
@@ -99,7 +118,10 @@ public class StateHandlers implements Collection,List{
         }
         return true;
     }
-
+/*
+    Metodo para borrar objetos del HASH
+    @return TRUE al terminar de borrar todos los objetos del HASH
+*/
     @Override
     public boolean removeAll(Collection clctn) {
         Iterator<InterfaceStates> clctnIt=clctn.iterator();
@@ -110,7 +132,10 @@ public class StateHandlers implements Collection,List{
         }
         return true;
     }
-
+/*
+    Metodo para compara objetos usando el metodo equals
+    @return TRUE si lo encontro
+*/
     @Override
     public boolean retainAll(Collection clctn) {
         Iterator<InterfaceStates> clctnIt=clctn.iterator();
@@ -120,7 +145,10 @@ public class StateHandlers implements Collection,List{
         }
         return true;
     }
-
+/*
+    Metodo para borrar el Hash map
+*/
+   
     @Override
     public void clear() {
         content.clear();
@@ -130,7 +158,11 @@ public class StateHandlers implements Collection,List{
     public boolean addAll(int i, Collection clctn) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+/*
+    Metodo para obtener el objeto dentro del HASH
+    @param i: Clave del elemento 
+    @return content.get(i): Elemento con la clase i
+*/
     @Override
     public Object get(int i) {
         return content.get(i);
@@ -175,18 +207,28 @@ public class StateHandlers implements Collection,List{
     public List subList(int i, int i1) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+/*
+    Metodo para imprimir
+    return hash: Imprime el HASH (String)
+*/
     @Override
     public String toString()
     {
         return content.values().toString();
     }
-
+/*
+    Metodo para obtener clave de HASH
+    @return hash: Clave del HASH (int)
+*/
     @Override
     public int hashCode() {
         int hash = 3;
         return hash;
     }
-
+/*
+    Metodo para comparar
+    @return TRUE o FALSE dependiendo si es igual o no (boolean)
+*/
     @Override
     public boolean equals(Object obj) {
         System.out.println("USO EQUALS");

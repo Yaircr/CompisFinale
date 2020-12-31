@@ -21,7 +21,14 @@ import com.eycr.automaton.Transition;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/*
+    Clase para la creación del AFN Grande
+*/
 public class Special {
+/*
+    Metodo para los AFN y hacer uno solo
+    @param HashMap<Integer,AFN> afns: Los AFN'S con los que se creara el AFN FINAL
+*/
     public void unir(HashMap<Integer,AFN> afns)
     {
         Iterator it1=afns.values().iterator();
@@ -44,7 +51,6 @@ public class Special {
         System.out.println("NUEVO AFN");    
         System.out.println(newAFN.toString());
         afns.clear();
-        afns.put(newAFN.getId(),(AFN)newAFN);
-        
+        afns.put(newAFN.getId(),(AFN)newAFN);   
     }
 }
