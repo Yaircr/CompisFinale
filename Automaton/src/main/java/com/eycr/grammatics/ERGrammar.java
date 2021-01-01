@@ -18,12 +18,24 @@ import com.eycr.lexic.LexicAnalyzer;
 import com.eycr.utilities.Const;
 import com.eycr.utilities.IOops;
 
+/*
+   
+    Interfaz para la Descenso recursivo para la Gramática de Gramaticas
+    Incluye los métodos E, Ep, T, Tp, C, Cp y F
+    @throws UnsopportedOperationException en caso de que se solicite que la interfaz realice alguna operacion que no este codificada
+
+*/
+
 public class ERGrammar {
     private LexicAnalyzer lexic;
     public ERGrammar(LexicAnalyzer lexic)
     {
         this.lexic=lexic;
     }
+    /*
+        Método que busca si se cumple T y Ep
+        @return true o false si T y Ep se cumplen
+    */
     public Boolean E(InterfaceAFN f)
     {
         //System.out.println("Llama a E");
@@ -36,6 +48,10 @@ public class ERGrammar {
         }
         return false;
     }
+    /*
+        Método que obtiene el token y valida si se cumple T, de ser así se agrega el AFN generado
+        @return true o false si se valida T y Ep
+    */
     public Boolean Ep(InterfaceAFN f)
     {
         //System.out.println("Llama a Ep");
@@ -57,6 +73,10 @@ public class ERGrammar {
         lexic.undoYylex();
         return true;
     }
+    /*
+        Método que valida si se cumplen C y Tp
+        @return true o false si C y Tp se cumplen
+    */
     public Boolean T(InterfaceAFN f)//CUIDADO CON EL RETURN
     {
         //System.out.println("Llama a T");
@@ -69,6 +89,11 @@ public class ERGrammar {
         }
         return false;
     }
+    /*
+        Método que obtiene el token evaluado y verifica si es correcto, después evalua en C y Tp
+        @params token: Valor númerico correspondiente al carácter
+        @return true o false si se cumplen C y Tp
+    */
     public Boolean Tp(InterfaceAFN f)
     {
         //System.out.println("Llama a Tp");
@@ -91,6 +116,10 @@ public class ERGrammar {
         lexic.undoYylex();
         return true;
     }
+    /*
+        Método que evalua si se cumplen F y Cp
+        @return true o false si F y Cp se cumplen
+    */
     public Boolean C(InterfaceAFN f)
     {
         //System.out.println("Llama a C");
@@ -104,6 +133,12 @@ public class ERGrammar {
         }
         return false;
     }
+    /*
+        Método que obtiene el token y valida su opción (que símbolo es)
+        Al final devuelve el lexico
+        @params token: Valor númerico correspondiente al carácter
+        @return true o false dependiendo las evaluaciones 
+    */
     public Boolean Cp(InterfaceAFN f)
     {
         //System.out.println("Llama a Cp");
@@ -141,6 +176,11 @@ public class ERGrammar {
         lexic.undoYylex();
         return true;
     }
+    /*
+        Método que obtiene un token y verifica si es parentesis, simb o corchete izq.
+        @params token: Valor númerico correspondiente al carácter
+        @return true o false dependiendo las evaluaciones.
+    */
     public Boolean F(InterfaceAFN f)
     {
         //System.out.println("Llama a F");
@@ -173,6 +213,13 @@ public class ERGrammar {
         }
         return false;
     }
+    /*
+        Método que obtiene los token y verifica si el carácter es un corchete derecho
+        @params a: Carácter
+        @parms b: Carácter
+        @params token: Valor númerico correspondiente al carácter
+        @return true o false si es o no corchete derecho
+    */
     public Boolean corchetes(InterfaceAFN f)
     {
         System.out.println("ENTRA 1");

@@ -13,10 +13,12 @@
 package com.eycr.grammatics;
 
 import java.util.ArrayList;
+/*
+    Clase para guardar las reglas del árbol de derivación 
 
+*/
 public class Grammar {
     private ArrayList<DerivationNode> rules;
-    
     public Grammar(){
         rules=new ArrayList<DerivationNode>();
     }

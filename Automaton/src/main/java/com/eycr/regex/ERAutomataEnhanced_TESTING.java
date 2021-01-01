@@ -20,6 +20,10 @@ import com.eycr.utilities.Const;
 
 public class ERAutomataEnhanced_TESTING {
     InterfaceAFD afd;
+    /*
+        Constructor que crea un automata utilizando todos los símbolos y operaciones que se le puedan aplicar, así mismo numeros y abecedario (mayus y minus)
+        @return No hay
+    */
     public ERAutomataEnhanced_TESTING()
     {
         AFN f1=new AFN('+');

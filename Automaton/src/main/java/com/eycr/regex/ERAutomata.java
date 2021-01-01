@@ -23,6 +23,9 @@ import java.util.Scanner;
 
 public class ERAutomata {
     InterfaceAFD afd;
+    /*
+        Constructor que convierte un AFN a AFD
+    */
     public ERAutomata()
     {
         InterfaceAFN f1=getHibrid2();
@@ -47,6 +50,10 @@ public class ERAutomata {
     {
         return getAllAutomata();
     }
+    /*
+        Método que obtiene 2 automatas y los junta en 1 solo
+        @return 
+    */
     private InterfaceAFN getHibrid1()
     {
         InterfaceAFN f1=getAllAutomata();
@@ -54,6 +61,10 @@ public class ERAutomata {
         f1.addAFN(f2);
         return f1;
     }
+    /*
+        Método que obtiene 2 automatas (1 concatenado y otro con OR)
+        @return Automata con | y & 
+    */
      private InterfaceAFN getHibrid2()
     {
         InterfaceAFN f1=getHibrid1();
@@ -72,6 +83,10 @@ public class ERAutomata {
         f1.concatenateAFN(f3);
         return f1;
     }
+     /*
+        Método que obtiene el automata que tenga Parentesis izquierdo y parentesis derecho
+        @return Automata con paréntesis y símbolos especiales
+     */
     private InterfaceAFN getAllAutomataWithPar()
     {
         InterfaceAFN f1=getAllAutomata();
@@ -97,6 +112,10 @@ public class ERAutomata {
         
         return f2;
     }
+    /*
+        Genera automatas básicos y devuelve la concatenación con estos.
+        @return Automata concatenado con & y |
+    */
     private InterfaceAFN getAllAutomata()
     {
         InterfaceAFN f1=generateBasicSimb();
@@ -114,6 +133,11 @@ public class ERAutomata {
         
         return f1;
     }
+    /*
+        Genera automatas para unirlos con 1 (básicos), también se crean automatas con valores numericos y alfabeticos
+        Se concactena todo y devolvemos un AFN con todos los símbolos.
+        @return Automata complejo de símbolos especiales, y letras, números y puntos.
+    */
     private InterfaceAFN generateBasicSimb()
     {
          /*AFN para SIMB(+|*|?)*/

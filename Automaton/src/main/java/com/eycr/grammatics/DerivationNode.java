@@ -11,7 +11,9 @@
                                 
 */
 package com.eycr.grammatics;
-
+/*
+    Clase para almacenar los datos del árbol de derivación
+*/
 public class DerivationNode {
     private char derivationSybol;
     private boolean finalSymbol;

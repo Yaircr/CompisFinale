@@ -16,6 +16,11 @@ import com.eycr.automaton.TableAFD;
 import com.eycr.utilities.Const;
 import java.util.Stack;
 
+/*
+    Clase para el analizador lexico
+    Permite trabajar todo el analizador léxico para el proyecto    
+*/
+
 public class LexicAnalyzer {
     private Stack<Integer> p;
     private TableAFD afdTable;
@@ -26,7 +31,19 @@ public class LexicAnalyzer {
     Integer iniLexeme;
     Integer lastLexeme;
     private String lexeme;
-    
+    /*
+        Constructor para el analizador léxico a partir de los siguientes parametros
+        @param s: Cadena a analizar
+        @param afdTabla: Tabla de AFD 
+        @param p: Pila que almacena los carácteres 
+        @param actualCharacter: Carácter en el que se encuentra
+        @param iniLexeme: Inicio del lexema
+        @param lastLexeme: Fin del lexema        
+        Recibe cadena y tabla AFD
+        @see AFD
+        
+        @return No hay
+    */
     public LexicAnalyzer(String cad,TableAFD afdTable)
     {
         s=cad+"$\0";
@@ -36,7 +53,22 @@ public class LexicAnalyzer {
         iniLexeme=0;
         lastLexeme=0;
     }
-
+    /*
+        2o Posible constructor para el analizador léxico a partir de los siguientes parametros
+        @param s: Cadena a analizar
+        @param afdTabla: Tabla de AFD 
+        @param p: Pila que almacena los carácteres 
+        @param actualCharacter: Carácter en el que se encuentra
+        @param iniLexeme: Inicio del lexema
+        @param lastLexeme: Fin del lexema        
+        @param token: Valor que se le da al símbolo
+        @param lexeme: Lexema que se analiza
+        @param hadAcceptedState: Bandera que indica si tenía estado de aceptación
+        Recibe pila p, afdTable, cadena s, hadAcceptedState, token, actualCharacter, iniLexeme, LastLexeme y lexeme
+        @see AFD
+        
+        @return No hay
+    */
     public LexicAnalyzer(Stack<Integer> p, TableAFD afdTable, String s, Boolean hadAcceptedState, Integer token, Integer actualCharacter, Integer iniLexeme, Integer lastLexeme, String lexeme) {
         this.p = p;
         this.afdTable = afdTable;
@@ -48,13 +80,19 @@ public class LexicAnalyzer {
         this.lastLexeme = lastLexeme;
         this.lexeme = lexeme;
     }
-    
+    /*
+        Método que solicita el token (valor tipo int)
+        @params tok: Valor entero del token
+    */
     public Integer getToken()
     {
         Integer tok=yyLex();//REVISAR
         //System.out.println("Analiza con "+tok+" y lexema "+lexeme);
         return tok;
     }
+    /*
+        Método que regresa el token solicitado
+    */
     public void undoYylex()
     {
         actualCharacter=p.pop();
@@ -63,6 +101,11 @@ public class LexicAnalyzer {
     {
         return 'a';
     }
+    /*
+        Método que se encarga de buscar el token en la tabla de AFD el carácter analizado
+        @return 0 si no hay nada, cualquier número si encuentra el token del carácter analizado
+        
+    */
     public Integer yyLex()
     {
         Integer actualState=0;
@@ -110,6 +153,10 @@ public class LexicAnalyzer {
         }
         return 0;
     }
+    /*
+        Método que valida si no había un estado de aceptación previo
+        @return ERROR o token Si no existía un estado de aceptación previo
+    */
     private Integer asteriscoVerde()
     {
         if(!hadAcceptedState)
