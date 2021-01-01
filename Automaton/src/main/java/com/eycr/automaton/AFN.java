@@ -229,8 +229,9 @@ public class AFN implements InterfaceAFN{
         states.add(newIniState);
         states.add(newFinalState);
         State s=(State)currentState;
-        
+        System.out.println("This: " +s);
         State s2=(State)af.currentState;
+        System.out.println("afn: " +s2);
         Collection<State> states2=af.getStates();
         states.addAll(states2);
         Transition t1=new Transition(Const.EPSILON,s);

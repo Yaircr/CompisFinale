@@ -83,7 +83,7 @@ public class TableAFD {
                     //i++;
                 }
                 tableTransition[state.getId()][j]=(state.hastransition(c)!=null)?state.hastransition(c).getId():-1;
-                //System.out.println("["+state.getId()+"]["+j+"]="+tableTransition[state.getId()][j]);
+                System.out.println("["+state.getId()+"]["+j+"]="+tableTransition[state.getId()][j]);
                 j++;
             }
             tableTransition[state.getId()][j]=state.getToken();
@@ -98,6 +98,9 @@ public class TableAFD {
     */
     public Integer nextState(Integer actualState,Character c)
     {
+        /*FUNCIONA
+            Pero si se prueba con un carácter que no este dentro del alfabeto del automata, truena el programa, ya que accede a un null pointer
+        */
         return tableTransition[actualState][symbols.get(c)];
     }
     

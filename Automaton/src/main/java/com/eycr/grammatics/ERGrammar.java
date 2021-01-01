@@ -34,6 +34,7 @@ public class ERGrammar {
     }
     /*
         Método que busca si se cumple T y Ep
+        
         @return true o false si T y Ep se cumplen
     */
     public Boolean E(InterfaceAFN f)

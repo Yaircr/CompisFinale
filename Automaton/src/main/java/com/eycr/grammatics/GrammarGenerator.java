@@ -14,16 +14,27 @@ package com.eycr.grammatics;
 
 import com.eycr.lexic.LexicAnalyzer;
 import com.eycr.utilities.Const;
+/*
+    Interfaz para la gramática de gramaticas
+    Incluye los metodos a usar para generacion de reglas, ladoIzq, ladosDerechos,ladosDerechosP, listaSimbolos, listaSimbolosP        
+    
+*/
 
 public class GrammarGenerator {
     private LexicAnalyzer lexic;
+    /*     
+        @return true o false si genera el arreglo de reglas
+    */
     boolean G(Grammar g){
 	if(listaReglas(g)){
 		return true;
 	}
 	return false;
     }
-
+    /*       
+        @param g        
+        @return true o false si valida las reglas   
+    */
     boolean listaReglas(Grammar g){
         int token;
         if(regla(g)){
@@ -37,7 +48,10 @@ public class GrammarGenerator {
         }
         return false;
     }
-
+    /*       
+        @param g        
+        @return true o false si valida las reglas   
+    */
     boolean listaReglasP(Grammar g){
         LexicAnalyzer E;
         int token;
@@ -53,7 +67,10 @@ public class GrammarGenerator {
         lexic.setStatus(E);
         return true;
     }
-
+ /*       
+        @param g        
+        @return true o false si valida las reglas   
+    */
     boolean regla(Grammar g){
         DerivationNode r = new DerivationNode();
         int token;
@@ -68,17 +85,24 @@ public class GrammarGenerator {
         }
         return false;
     }
-
+ /*       
+        Agrega símbolo al nodo 
+        @param g        
+        @return true o false si valida las reglas   
+    */
     boolean ladoIzq(DerivationNode r){
         int token;
         token=lexic.getToken();
         if(token==Const.SIMB){
-            r.setDerivationSybol(lexic.getLexeme(token));//revisar parametros de lexeme
-            return true;//Ojoooooo
+            r.setDerivationSybol(lexic.getLexeme(token));//Revisar parametros de lexeme
+            return true;//Cuidado
         }
         return false;
     }
-
+ /*       
+        @param g        
+        @return true o false si valida las reglas   
+    */
     boolean ladosDerechos(DerivationNode r){
         if(listaSimbolos(r)){
             if(ladosDerechosP(r)){
@@ -87,7 +111,11 @@ public class GrammarGenerator {
         }
         return false;
     }
-
+ /*       
+        Agrega símbolo al nodo
+        @param g        
+        @return true o false si valida las reglas   
+    */
     boolean ladosDerechosP(DerivationNode r){
         DerivationNode n2 = r.getDerivA();
         int token;
@@ -105,6 +133,11 @@ public class GrammarGenerator {
         return true;
     }
 
+     /*       
+        Agrega símbolo al nodo
+        @param g        
+        @return true o false si valida las reglas   
+    */
     boolean listaSimbolos(DerivationNode r){
         DerivationNode n = new DerivationNode();
         int token;
@@ -117,6 +150,14 @@ public class GrammarGenerator {
             }
         }
         return false;
+    }
+
+     /*       
+        Agrega símbolo al nodo
+        @param g        
+        @return true o false si valida las reglas   
+    */    
+    public GrammarGenerator() {
     }
 
     boolean listaSimbolosP(DerivationNode n1){
