@@ -35,7 +35,7 @@ public class IOops {
     */    
     public Integer askForToken()
     {
-        System.out.println("Give me a token please. If you dont have put -1");
+        System.out.println("Indique el token, si no cuenta con uno, de -1");
         return sc.nextInt();
     }
     
@@ -46,7 +46,7 @@ public class IOops {
     */    
     public String askForString()
     {
-        System.out.println("Give a string ");
+        System.out.println("Introduzca cadena");
         return sc.next();
     }
     

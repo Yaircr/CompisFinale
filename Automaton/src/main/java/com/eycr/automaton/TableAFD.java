@@ -110,11 +110,11 @@ public class TableAFD {
     public void print()
     {
         System.out.println("Tabla:");
-        String info = "State\t";
+        String info = "Estado\t";
         for(Character c: symbols.keySet()){
-            info+=c+"(Symbol)\t";
+            info+=c+"(Simbolo)\t";
         }
-        info+="Final";
+        info+="Es Final";
         System.out.println(info);
         for(int i=0;i<numberOfStates;i++){
             System.out.print(i+"\t");
@@ -123,6 +123,25 @@ public class TableAFD {
             }
             System.out.println("");
         }
+    }
+    public String printConsola()
+    {
+        String r ="";
+        r+="Tabla:\n";
+        String info = "Estado\t";
+        for(Character c: symbols.keySet()){
+            info+=c+"(Simbolo)\t";
+        }
+        info+="Es Final\n";
+        r+=info;
+        for(int i=0;i<numberOfStates;i++){
+            r+=i+"\t";
+            for(int j=0; j<symbols.size()+1; j++){
+                r+=tableTransition[i][j]+"\t\t";
+            }
+            r+="\n";
+        }
+        return r;
     }
     
     

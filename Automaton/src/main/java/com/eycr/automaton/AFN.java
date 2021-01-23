@@ -407,17 +407,17 @@ public class AFN implements InterfaceAFN{
     public String toString()
     {
         String info="AUTOMATA::\n";
-        info+="--ALPHABET--\n";
+        info+="~Alfabeto~\n";
         info+=alphabet.getAlpha()+"\n";
-        info+="--STATES--\n";
+        info+="~Estados~\n";
         Iterator<State> statesIt=this.states.iterator();
         while(statesIt.hasNext())
         {
             info+=statesIt.next().description();
         }
-        info+="--CURRENT STATE--\n";
+        info+="~Estado Actual~\n";
         info+=currentState.toString()+"\n";
-        info+="--FINAL STATES--\n";
+        info+="~Estados Finales~\n";
         Iterator<State> acc=this.acceptedStates.iterator();
         while(acc.hasNext())
         {

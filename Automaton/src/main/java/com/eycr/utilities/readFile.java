@@ -27,7 +27,7 @@ public class readFile {
         archivo = null;
         fr = null;
         br = null;
-        dir = "C:\\Users\\Jared\\Documents\\Compiladores\\Proyecto final\\CompisFinale\\Automaton\\Expresiones y gramaticas\\";
+        dir = "..\\Automaton\\Expresiones y gramaticas\\";
         renglones = new ArrayList<String>();
     }
     
