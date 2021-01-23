@@ -215,12 +215,12 @@ public class ConsoleMenu {
                     renglones = archivo.lineasArchivoLista(path);
                     //System.out.println(renglones);
                     try{
-                        
+                        /*MANEJO DE ARCHIVO PARA REGEX*/
+                         AFN ffile=new AFN();
 			for(int i = 0; i < renglones.size(); i++){
-                                /*MANEJO DE ARCHIVO PARA REGEX*/
-                                AFN ffile=new AFN();
+                               
                                 /*SI ES LINEA IMPAR ES REGEX*/
-                                if(i%2 != 0){
+                                if(i%2 == 0){
                                     String cadenaRegex = renglones.get(i).toString();
                                     ERAutomataEnhanced_TESTING erFF=new ERAutomataEnhanced_TESTING();
                                     LexicAnalyzer lexicFF=new LexicAnalyzer(cadenaRegex,erFF.getAfd().getTable());
@@ -232,6 +232,7 @@ public class ConsoleMenu {
                                     /*SEGUNDA LINEA LEIDA CORRESPONDE A SU TOKEN*/
                                     int tok = Integer.valueOf(renglones.get(i).toString());
                                     ffile.associateToken(tok);
+                                    ffile=new AFN();
                                 }
                                 
 			}
@@ -239,6 +240,10 @@ public class ConsoleMenu {
                     }catch(Exception e){
                         e.printStackTrace();
                     }
+                    Special usff=new Special();
+                    usff.unir(afns);
+                    
+                    System.out.println("Se unieron todos los AFNs generados");
                     break;    
                 default: System.exit(0);
             }    

@@ -1,4 +1,6 @@
-Esta
-Es
-Una
-Prueba
+(a|b)&c
+510
+h&o&l&a
+520
+b*
+530
