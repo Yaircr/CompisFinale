@@ -20,7 +20,7 @@ import com.eycr.utilities.IOops;
 
 /*
    
-    Interfaz para la Descenso recursivo para la Gramática de Gramaticas
+    Analizador Sintactico para E.R
     Incluye los métodos E, Ep, T, Tp, C, Cp y F
     @throws UnsopportedOperationException en caso de que se solicite que la interfaz realice alguna operacion que no este codificada
 

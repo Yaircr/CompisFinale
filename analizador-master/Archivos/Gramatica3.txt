@@ -1,0 +1,11 @@
+<SB>-><IM><SBp>;
+<SBp>-><=><IM><SBp>|<ë>;
+<IM>-><BT><IMp>;
+<IMp>-><c><BT><IMp>|<ë>;
+<BT>-><BF><BTp>;
+<BTp>-><v><BF><BTp>|<ë>;
+<BF>-><BS><BFp>;
+<BFp>-><w><BS><BFp>|<ë>;
+<BS>-><BP>|<t><BP>;
+<BP>-><LV>|<i>|<(><SB><)>;
+<LV>-><TRUE>|<FALSE>;

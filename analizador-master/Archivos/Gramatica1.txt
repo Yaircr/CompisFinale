@@ -1,0 +1,10 @@
+<G>-><Reglas>;
+<Reglas>-><Regla><;><ReglasP>;
+<ReglasP>-><Regla><;><ReglasP>|<ë>;
+<Regla>-><LadoIzq><FLECHA><LadosDerechos>;
+<LadoIzq>-><Simbolo>;
+<LadosDerecho>-><LadoDerecho><LadosDerechosP>;
+<LadosDerechosP>-><OR><LadoDerecho><LadosDerechosP>|<ë>;
+<LadoDerecho>-><ListaSimbolos>;
+<ListaSimbolos>-><Simbolo><ListaSimbolosP>;
+<ListaSimbolosP>-><Simbolo><ListaSimbolosP>|<ë>;
