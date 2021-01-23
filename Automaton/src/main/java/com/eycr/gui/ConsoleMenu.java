@@ -166,26 +166,27 @@ public class ConsoleMenu {
                     break;
                 case 9:
                     try{
-                        Scanner s = new Scanner(new File(LLAMADA A CLASE));
-			while (s.hasNextLine()) {
-				
+                        ArrayList lineas;
+			for(int i = 0; i < lineas.size(); i++){
                                 /*MANEJO DE ARCHIVO PARA REGEX*/
-                                
-                                /*SI ES LINEA IMPAR ES REGEX*/
-                                String cadenaRegex = s.next();
-                                ERAutomataEnhanced_TESTING erA=new ERAutomataEnhanced_TESTING();
-                                LexicAnalyzer lexic=new LexicAnalyzer(cadenaRegex,erA.getAfd().getTable());
-                                ERGrammar erG=new ERGrammar(lexic);
                                 AFN f=new AFN();
-                                erG.E(f);
-                                afns.put(f.getId(), f);
-                                
-                                /*SEGUNDA LINEA LEIDA CORRESPONDE A SU TOKEN*/
-                                int tok = s.nextInt();
-                                f.associateToken(tok);
+                                /*SI ES LINEA IMPAR ES REGEX*/
+                                if(i%2 != 0){
+                                    String cadenaRegex = lineas.get(i).toString();
+                                    ERAutomataEnhanced_TESTING erA=new ERAutomataEnhanced_TESTING();
+                                    LexicAnalyzer lexic=new LexicAnalyzer(cadenaRegex,erA.getAfd().getTable());
+                                    ERGrammar erG=new ERGrammar(lexic);
+                                    
+                                    erG.E(f);
+                                    afns.put(f.getId(), f);
+                                }else{
+                                    /*SEGUNDA LINEA LEIDA CORRESPONDE A SU TOKEN*/
+                                    int tok = Integer.valueOf(lineas.get(i).toString());
+                                    f.associateToken(tok);
+                                }
                                 
 			}
-			s.close();
+			
                     }catch(Exception e){
                         e.printStackTrace();
                     }
