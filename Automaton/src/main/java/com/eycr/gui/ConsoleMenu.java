@@ -156,7 +156,7 @@ public class ConsoleMenu {
                     System.out.println("Cadena="+cad);
                     afd.getTable().print();
                     if(afd.analizeString(cad)){
-                        System.out.println("La caena es valida");
+                        System.out.println("La cadena es valida");
                     }else{
                         System.out.println("La caena NO es valida");
                     }

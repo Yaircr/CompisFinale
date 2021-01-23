@@ -97,7 +97,7 @@ public class AutomatonGUI extends javax.swing.JFrame {
 
         salidaSis.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         salidaSis.setText("Hola usuario!");
-        salidaSis.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Respuesta del sistema", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+        salidaSis.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Respuesta del sistema", 0, 0, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
 
         jButton1.setText("Salir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
