@@ -8,6 +8,7 @@ com\eycr\gui\AutomatonGUI$2.class
 com\eycr\automaton\AFN.class
 com\eycr\automaton\Transition.class
 com\eycr\automaton\InterfaceStates.class
+com\eycr\calculadora\InterfaceCalc.class
 com\eycr\automaton\InterfaceAFN.class
 com\eycr\automaton\Converter.class
 com\eycr\gui\AutomatonGUI$11.class
@@ -31,8 +32,10 @@ com\eycr\gui\AutomatonGUI$3.class
 com\eycr\gui\AutomatonGUI.class
 com\eycr\automaton\InterfaceAutomaton.class
 com\eycr\grammatics\DerivationNode.class
+com\eycr\calculadora\analizadorSintactico.class
 com\eycr\automaton\Alpha.class
 com\eycr\gui\AutomatonGUI$5.class
+com\eycr\calculadora\constCalculadora.class
 com\eycr\automaton\AFD.class
 com\eycr\gui\AutomatonGUI$12.class
 com\eycr\regex\ERAutomataEnhanced_TESTING.class

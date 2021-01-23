@@ -14,6 +14,7 @@ package com.eycr.gui;
 
 import com.eycr.automaton.AFD;
 import com.eycr.automaton.AFN;
+import com.eycr.automaton.Alpha;
 import com.eycr.automaton.Converter;
 import com.eycr.automaton.InterfaceAFN;
 import com.eycr.automaton.PlaceState;
@@ -356,21 +357,37 @@ public class AutomatonGUI extends javax.swing.JFrame {
 
         String cad = JOptionPane.showInputDialog(rootPane, "Ingresa la cadena a analizar");
         salidaSis.setText("Cadena=" + cad);
-        consola.append(afd.getTable().printConsola());
-        if (afd.analizeString(cad)) {
-            JOptionPane.showMessageDialog(rootPane, "La cadena es valida", "EXITO", JOptionPane.WARNING_MESSAGE);
-            salidaSis.setText("La cadena es valida");
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "La cadena NO es valida", "ERROR", JOptionPane.ERROR_MESSAGE);
-            salidaSis.setText("La cadena NO es valida");
-        }
-        LexicAnalyzer lexic2 = new LexicAnalyzer(cad, afd.getTable());
-        while (true) {
-            Integer yyLexValue = lexic2.yyLex();
-            if (yyLexValue == 0) {
-                break;
+        Alpha aux = afd.getAlpha();
+        int exit = 0;
+        int posicion = 0;
+        for(int i = 0; i < cad.length(); i++){
+            if(aux.verifySymbol(cad.charAt(i))){
+                exit = 0;
             }
-            consola.append("yyLex:" + yyLexValue + " con lexema " + lexic2.getLexeme()+"\n");
+            else{
+                exit = 1;
+                posicion = i;
+            }
+        }
+        if(exit == 0 ){
+            consola.append(afd.getTable().printConsola());
+            if (afd.analizeString(cad)) {
+                JOptionPane.showMessageDialog(rootPane, "La cadena es valida", "EXITO", JOptionPane.WARNING_MESSAGE);
+                salidaSis.setText("La cadena es valida");
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "La cadena NO es valida", "ERROR", JOptionPane.ERROR_MESSAGE);
+                salidaSis.setText("La cadena NO es valida");
+            }
+            LexicAnalyzer lexic2 = new LexicAnalyzer(cad, afd.getTable());
+            while (true) {
+                Integer yyLexValue = lexic2.yyLex();
+                if (yyLexValue == 0) {
+                    break;
+                }
+                consola.append("yyLex:" + yyLexValue + " con lexema " + lexic2.getLexeme()+"\n");
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "El caracter "+cad.charAt(posicion)+" no existe en el alfabeto, no se puede analizar", "FALLO", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_analizarActionPerformed
 
