@@ -23,6 +23,9 @@ import com.eycr.lexic.LexicAnalyzer;
 import com.eycr.utilities.IOops;
 import com.eycr.utilities.Special;
 import com.eycr.grammatics.ERGrammar;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -162,17 +165,30 @@ public class ConsoleMenu {
                     }
                     break;
                 case 9:
-                    IOops io=new IOops();
-                    System.out.println("Proporciona una expresión de regular");
-                    String s=sc.next();
-                    ERAutomataEnhanced_TESTING erA=new ERAutomataEnhanced_TESTING();
-                    LexicAnalyzer lexic=new LexicAnalyzer(s,erA.getAfd().getTable());
-                    ERGrammar erG=new ERGrammar(lexic);
-                    AFN f=new AFN();
-                    erG.E(f);
-                    afns.put(f.getId(), f);
-                    System.out.println("Ingresa un token para este automata =)");
-                    f.associateToken(io.askForToken());
+                    try{
+                        Scanner s = new Scanner(new File(LLAMADA A CLASE));
+			while (s.hasNextLine()) {
+				
+                                /*MANEJO DE ARCHIVO PARA REGEX*/
+                                
+                                /*SI ES LINEA IMPAR ES REGEX*/
+                                String cadenaRegex = s.next();
+                                ERAutomataEnhanced_TESTING erA=new ERAutomataEnhanced_TESTING();
+                                LexicAnalyzer lexic=new LexicAnalyzer(cadenaRegex,erA.getAfd().getTable());
+                                ERGrammar erG=new ERGrammar(lexic);
+                                AFN f=new AFN();
+                                erG.E(f);
+                                afns.put(f.getId(), f);
+                                
+                                /*SEGUNDA LINEA LEIDA CORRESPONDE A SU TOKEN*/
+                                int tok = s.nextInt();
+                                f.associateToken(tok);
+                                
+			}
+			s.close();
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
                     break;
                 case 10:
                     Special us=new Special();
