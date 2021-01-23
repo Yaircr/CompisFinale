@@ -23,14 +23,14 @@ import com.eycr.lexic.LexicAnalyzer;
 import com.eycr.utilities.IOops;
 import com.eycr.utilities.Special;
 import com.eycr.grammatics.ERGrammar;
-<<<<<<< HEAD
+
 import com.eycr.utilities.readFile;
 import java.io.File;
-=======
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
->>>>>>> 30e94fd32bde819340614a4ecac4c2a93fa3fed6
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -173,31 +173,17 @@ public class ConsoleMenu {
                     }
                     break;
                 case 9:
-                    try{
-                        ArrayList lineas;
-			for(int i = 0; i < lineas.size(); i++){
-                                /*MANEJO DE ARCHIVO PARA REGEX*/
-                                AFN f=new AFN();
-                                /*SI ES LINEA IMPAR ES REGEX*/
-                                if(i%2 != 0){
-                                    String cadenaRegex = lineas.get(i).toString();
-                                    ERAutomataEnhanced_TESTING erA=new ERAutomataEnhanced_TESTING();
-                                    LexicAnalyzer lexic=new LexicAnalyzer(cadenaRegex,erA.getAfd().getTable());
-                                    ERGrammar erG=new ERGrammar(lexic);
-                                    
-                                    erG.E(f);
-                                    afns.put(f.getId(), f);
-                                }else{
-                                    /*SEGUNDA LINEA LEIDA CORRESPONDE A SU TOKEN*/
-                                    int tok = Integer.valueOf(lineas.get(i).toString());
-                                    f.associateToken(tok);
-                                }
-                                
-			}
-			
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
+                    IOops io=new IOops();
+                    System.out.println("Proporciona una expresión de regular");
+                    String s=sc.next();
+                    ERAutomataEnhanced_TESTING erA=new ERAutomataEnhanced_TESTING();
+                    LexicAnalyzer lexic=new LexicAnalyzer(s,erA.getAfd().getTable());
+                    ERGrammar erG=new ERGrammar(lexic);
+                    AFN f=new AFN();
+                    erG.E(f);
+                    afns.put(f.getId(), f);
+                    System.out.println("Ingresa un token para este automata =)");
+                    f.associateToken(io.askForToken());
                     break;
                 case 10:
                     Special us=new Special();
@@ -227,7 +213,32 @@ public class ConsoleMenu {
                     path = sc1.nextLine();
                     List<String> renglones = new ArrayList<String>();  
                     renglones = archivo.lineasArchivoLista(path);
-                    System.out.println(renglones);
+                    //System.out.println(renglones);
+                    try{
+                        
+			for(int i = 0; i < renglones.size(); i++){
+                                /*MANEJO DE ARCHIVO PARA REGEX*/
+                                AFN ffile=new AFN();
+                                /*SI ES LINEA IMPAR ES REGEX*/
+                                if(i%2 != 0){
+                                    String cadenaRegex = renglones.get(i).toString();
+                                    ERAutomataEnhanced_TESTING erFF=new ERAutomataEnhanced_TESTING();
+                                    LexicAnalyzer lexicFF=new LexicAnalyzer(cadenaRegex,erFF.getAfd().getTable());
+                                    ERGrammar erGFF=new ERGrammar(lexicFF);
+                                    
+                                    erGFF.E(ffile);
+                                    afns.put(ffile.getId(), ffile);
+                                }else{
+                                    /*SEGUNDA LINEA LEIDA CORRESPONDE A SU TOKEN*/
+                                    int tok = Integer.valueOf(renglones.get(i).toString());
+                                    ffile.associateToken(tok);
+                                }
+                                
+			}
+			
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
                     break;    
                 default: System.exit(0);
             }    
