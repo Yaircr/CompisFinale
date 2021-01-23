@@ -44,6 +44,14 @@ public class LexicAnalyzer {
         
         @return No hay
     */
+    public LexicAnalyzer(String cad){
+        s=cad+"$\0";
+        p=new Stack<>();
+        actualCharacter=0;
+        iniLexeme=0;
+        lastLexeme=0;
+    }
+    
     public LexicAnalyzer(String cad,TableAFD afdTable)
     {
         s=cad+"$\0";

@@ -31,7 +31,8 @@ public class Const {
     public static final int END=0;              //
     public static final int END_CAD=(int)'$';   //TERMINADOR DE CADENA
     public static final int ERROR=1000;         //
-    public static final int PC=59;              //
+    public static final int PC=59;              //PUNTO Y COMA
     public static final int FLECHA=240;         //SIMBOLO FLECHA
+    public static final int ESPACIO = 32;       //ESPACIO
     //public static final String FLECHA="->";
 }

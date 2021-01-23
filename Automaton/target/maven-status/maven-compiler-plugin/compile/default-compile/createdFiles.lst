@@ -9,10 +9,12 @@ com\eycr\automaton\Transition.class
 com\eycr\automaton\InterfaceStates.class
 com\eycr\automaton\InterfaceAFN.class
 com\eycr\automaton\Converter.class
+com\eycr\grammatics\GramarTest.class
 com\eycr\regex\ERAutomata.class
 com\eycr\gui\AutomatonGUI$1.class
 com\eycr\gui\ConsoleMenu.class
 com\eycr\automaton\State.class
+com\eycr\utilities\readFile.class
 com\eycr\utilities\IOops.class
 com\eycr\utilities\Special.class
 com\eycr\automaton\TableAFD.class

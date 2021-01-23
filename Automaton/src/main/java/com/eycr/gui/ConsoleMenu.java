@@ -23,8 +23,11 @@ import com.eycr.lexic.LexicAnalyzer;
 import com.eycr.utilities.IOops;
 import com.eycr.utilities.Special;
 import com.eycr.grammatics.ERGrammar;
+import com.eycr.utilities.readFile;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -70,6 +73,8 @@ public class ConsoleMenu {
             System.out.println("8.-Analizar cadena con AFD");
             System.out.println("9.-Crear automata a partir de E.R.");
             System.out.println("10.-Unir todos los automatas");
+            System.out.println("11.-Crear automata a partir de E.R desde un archivo.");
+            System.out.println("12.-LL1");
 
             switch(sc.nextInt())
             {
@@ -180,6 +185,30 @@ public class ConsoleMenu {
                     
                     System.out.println("Se unieron todos los AFNs generados");
                     break;
+                    
+                case 11:
+                    String path;
+                    String carpeta = "C:\\Users\\Jared\\Documents\\Compiladores\\Proyecto final\\CompisFinale\\Automaton\\Expresiones y gramaticas";
+                    readFile archivo = new readFile();
+                    File carpetaLista = new File(carpeta);
+                    String[] listado = carpetaLista.list();
+                    if (listado == null || listado.length == 0) {
+                        System.out.println("No hay elementos dentro de la carpeta actual");
+                        return;
+                    }
+                    else {
+                        System.out.println("Archivos disponibles: ");
+                        for (String listado1 : listado) {
+                            System.out.println(listado1);
+                        }
+                    }
+                    System.out.println("¿Qué archivo quiere leer?");
+                    Scanner sc1 = new Scanner(System.in);
+                    path = sc1.nextLine();
+                    List<String> renglones = new ArrayList<String>();  
+                    renglones = archivo.lineasArchivoLista(path);
+                    System.out.println(renglones);
+                    break;    
                 default: System.exit(0);
             }    
         }

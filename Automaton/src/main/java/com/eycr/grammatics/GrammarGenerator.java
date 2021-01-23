@@ -25,6 +25,8 @@ public class GrammarGenerator {
     /*     
         @return true o false si genera el arreglo de reglas
     */
+    
+    
     boolean G(Grammar g){
 	if(listaReglas(g)){
 		return true;
