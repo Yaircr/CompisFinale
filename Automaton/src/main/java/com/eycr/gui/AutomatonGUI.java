@@ -1,8 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+                    INSTITUTO POLITECNICO NACIONAL
+                     ESCUELA SUPERIOR DE COMPUTO
+                            COMPILADORES
+                           PROYECTO FINAL
+                                3CM6
+                              ALUMNOS:
+                    CUELLAR RIVERA EDUARDO YAIR
+                     GARCIA VERA JARED ALBERTO
+                     HERNANDEZ MEJIA DIEGO YAIR
+                                
+*/
 package com.eycr.gui;
 
 import com.eycr.automaton.AFD;
@@ -10,26 +17,36 @@ import com.eycr.automaton.AFN;
 import com.eycr.automaton.Converter;
 import com.eycr.automaton.InterfaceAFN;
 import com.eycr.automaton.PlaceState;
+import com.eycr.grammatics.ERGrammar;
+import com.eycr.lexic.LexicAnalyzer;
+import com.eycr.regex.ERAutomataEnhanced_TESTING;
 import com.eycr.utilities.IOops;
 import com.eycr.utilities.Special;
+import com.eycr.utilities.readFile;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.List;
+import java.util.Scanner;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author firem
  */
 public class AutomatonGUI extends javax.swing.JFrame {
-    
-    private HashMap<Integer,AFN> afn_hm;
-    private AFD afd_result;
-    
+
+    private HashMap<Integer, AFN> afns;
+    private AFD afd;
+    AFN afn1, afn2;
+
     /**
      * Creates new form AutomatonGUI
      */
     public AutomatonGUI() {
         initComponents();
-        afn_hm=new HashMap<>();
+        afns = new HashMap<>();
     }
 
     /**
@@ -41,84 +58,159 @@ public class AutomatonGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSeparator1 = new javax.swing.JSeparator();
+        jButton2 = new javax.swing.JButton();
+        consola = new java.awt.TextArea();
+        salidaSis = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        fromFile = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        nAFN = new javax.swing.JMenuItem();
+        unirAfn = new javax.swing.JMenuItem();
+        concatAfn = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
+        conversor = new javax.swing.JMenuItem();
+        analizar = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        cerraduraPlus = new javax.swing.JMenuItem();
+        cerraduraKleene = new javax.swing.JMenuItem();
+        opcional = new javax.swing.JMenuItem();
+        unionTodos = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        singleRegex = new javax.swing.JMenuItem();
+
+        jButton2.setText("jButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 204, 204));
-        setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setForeground(new java.awt.Color(0, 153, 153));
         setMaximumSize(new java.awt.Dimension(900, 600));
         setMinimumSize(new java.awt.Dimension(600, 300));
         setResizable(false);
         setSize(new java.awt.Dimension(900, 600));
 
-        jMenu1.setText("Archivo");
+        consola.setEditable(false);
 
-        jMenuItem1.setText("Crear desde REG-EX");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        salidaSis.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        salidaSis.setText("Hola usuario!");
+        salidaSis.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Respuesta del sistema", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
+
+        jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setText("IPN - ESCUELA SUPERIOR DE CÓMPUTO 2021 - COMPILADORES");
+
+        jMenu1.setText("Archivo");
+
+        fromFile.setText("Crear desde REG-EX");
+        fromFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fromFileActionPerformed(evt);
+            }
+        });
+        jMenu1.add(fromFile);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("AFN");
 
-        jMenuItem2.setText("Crear nuevo");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        nAFN.setText("Crear nuevo");
+        nAFN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                nAFNActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        jMenu2.add(nAFN);
 
-        jMenuItem3.setText("Unir");
-        jMenu2.add(jMenuItem3);
+        unirAfn.setText("Unir");
+        unirAfn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                unirAfnActionPerformed(evt);
+            }
+        });
+        jMenu2.add(unirAfn);
 
-        jMenuItem4.setText("Concatenar");
-        jMenu2.add(jMenuItem4);
+        concatAfn.setText("Concatenar");
+        concatAfn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                concatAfnActionPerformed(evt);
+            }
+        });
+        jMenu2.add(concatAfn);
 
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("AFD");
 
-        jMenuItem8.setText("Convertir AFN -> AFD");
-        jMenu3.add(jMenuItem8);
+        conversor.setText("Convertir AFN -> AFD");
+        conversor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                conversorActionPerformed(evt);
+            }
+        });
+        jMenu3.add(conversor);
 
-        jMenuItem9.setText("Analizar Cadena");
-        jMenu3.add(jMenuItem9);
+        analizar.setText("Analizar Cadena");
+        analizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                analizarActionPerformed(evt);
+            }
+        });
+        jMenu3.add(analizar);
 
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Operaciones");
 
-        jMenuItem5.setText("Cerradura +");
-        jMenu4.add(jMenuItem5);
+        cerraduraPlus.setText("Cerradura +");
+        cerraduraPlus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cerraduraPlusActionPerformed(evt);
+            }
+        });
+        jMenu4.add(cerraduraPlus);
 
-        jMenuItem6.setText("Cerradura *");
-        jMenu4.add(jMenuItem6);
+        cerraduraKleene.setText("Cerradura *");
+        cerraduraKleene.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cerraduraKleeneActionPerformed(evt);
+            }
+        });
+        jMenu4.add(cerraduraKleene);
 
-        jMenuItem7.setText("Opcional");
-        jMenu4.add(jMenuItem7);
+        opcional.setText("Opcional");
+        opcional.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionalActionPerformed(evt);
+            }
+        });
+        jMenu4.add(opcional);
 
-        jMenuItem10.setText("Unir todos los automatas");
-        jMenu4.add(jMenuItem10);
+        unionTodos.setText("Unir todos los automatas");
+        unionTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                unionTodosActionPerformed(evt);
+            }
+        });
+        jMenu4.add(unionTodos);
+        jMenu4.add(jSeparator2);
+
+        singleRegex.setText("Single Regex");
+        singleRegex.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                singleRegexActionPerformed(evt);
+            }
+        });
+        jMenu4.add(singleRegex);
 
         jMenuBar1.add(jMenu4);
 
@@ -128,50 +220,221 @@ public class AutomatonGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 896, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(consola, javax.swing.GroupLayout.PREFERRED_SIZE, 868, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(salidaSis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 585, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(salidaSis, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(consola, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel1))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void fromFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fromFileActionPerformed
+        /*Leer txt para generar automatas a partir de regex*/
+        String path;
+        
+        String carpeta = "..\\Automaton\\Expresiones y gramaticas";
+        readFile archivo = new readFile();
+        File carpetaLista = new File(carpeta);
+        String[] listado = carpetaLista.list();
+        if (listado == null || listado.length == 0) {
+            JOptionPane.showMessageDialog(rootPane, "No hay elementos dentro de la carpeta actual", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Se encontraron archivos en el directorio", "Aviso", JOptionPane.WARNING_MESSAGE);    
+        }
+        path = (String) JOptionPane.showInputDialog(null, "Elija un archivo","Archivos disponibles", JOptionPane.QUESTION_MESSAGE, null,listado,listado[0]);
+        List<String> renglones = new ArrayList<String>();
+        renglones = archivo.lineasArchivoLista(path);
+        //System.out.println(renglones);
+        try {
+            /*MANEJO DE ARCHIVO PARA REGEX*/
+            AFN ffile = new AFN();
+            for (int i = 0; i < renglones.size(); i++) {
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+                /*SI ES LINEA IMPAR ES REGEX*/
+                if (i % 2 == 0) {
+                    String cadenaRegex = renglones.get(i);
+                    ERAutomataEnhanced_TESTING erFF = new ERAutomataEnhanced_TESTING();
+                    LexicAnalyzer lexicFF = new LexicAnalyzer(cadenaRegex, erFF.getAfd().getTable());
+                    ERGrammar erGFF = new ERGrammar(lexicFF);
+
+                    erGFF.E(ffile);
+                    afns.put(ffile.getId(), ffile);
+                } else {
+                    /*SEGUNDA LINEA LEIDA CORRESPONDE A SU TOKEN*/
+                    int tok = Integer.valueOf(renglones.get(i));
+                    ffile.associateToken(tok);
+                    ffile = new AFN();
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Special usff = new Special();
+        usff.unir(afns);
+        JOptionPane.showMessageDialog(rootPane, "Se han generado automatas a partir de un archivo con REGEX", "Exito al generar", JOptionPane.WARNING_MESSAGE);    
+        salidaSis.setText("Se unieron todos los AFNs generados");
+    }//GEN-LAST:event_fromFileActionPerformed
+
+    private void nAFNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nAFNActionPerformed
+        /*crear nuevo automata*/
+        //System.out.println("Introduce un caracter");
+        char x = JOptionPane.showInputDialog(rootPane, "Ingrese un caracter").charAt(0);
+        AFN afn = new AFN(x);
+        salidaSis.setText("AFN " + afn.getId() + " creado\n");
+
+        afns.put(afn.getId(), afn);
+        asignarTokenAutomata(afn);
+        consola.append(afn.toString() + "\n");
+    }//GEN-LAST:event_nAFNActionPerformed
+
+    private void unirAfnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unirAfnActionPerformed
+        /*Unir 2 automatas*/
+        JOptionPane.showMessageDialog(rootPane, "Seleccione el primer automata");
+        afn1 = selectAutomata();
+        JOptionPane.showMessageDialog(rootPane, "Seleccione el segundo automata");
+        afn2 = selectAutomata();
+        afn1.addAFN(afn2);
+        salidaSis.setText("AFN " + afn1.getId() + " unido con " + afn2.getId());
+        afns.remove(afn2.getId());
+        consola.append(afn1.toString());
+    }//GEN-LAST:event_unirAfnActionPerformed
+
+    private void concatAfnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concatAfnActionPerformed
+        /*Concatenar dos automatas*/
+        JOptionPane.showMessageDialog(rootPane, "Seleccione el primer automata");
+        afn1 = selectAutomata();
+        afn1.associateToken(-1);
+        JOptionPane.showMessageDialog(rootPane, "Seleccione el segundo automata");
+        afn2 = selectAutomata();
+        afn1.concatenateAFN(afn2);
+        salidaSis.setText("AFN " + afn1.getId() + " concatenado con " + afn2.getId());
+        afns.remove(afn2.getId());
+        consola.append(afn1.toString());
+    }//GEN-LAST:event_concatAfnActionPerformed
+
+    private void conversorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conversorActionPerformed
+        /*Convertir AFN a AFD*/
+        JOptionPane.showMessageDialog(rootPane, "Seleccione el automata a convertir de AFN -> AFD");
+        afn1 = selectAutomata();
+        /*System.out.println("PlaceStates:");
+        for(PlaceState s: afn1.generatePlaceStates()){
+            System.out.println(s.toString());
+        }*/
+        Converter afnConverter = new Converter();
+        afd = afnConverter.convertAFN(afn1);
+        System.out.println(afd.getTable().printConsola());
+        consola.append(afd.getTable().printConsola());
+    }//GEN-LAST:event_conversorActionPerformed
+
+    private void analizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analizarActionPerformed
+        /*Analizar una cadena con el AFD*/
+
+        String cad = JOptionPane.showInputDialog(rootPane, "Ingresa la cadena a analizar");
+        salidaSis.setText("Cadena=" + cad);
+        consola.append(afd.getTable().printConsola());
+        if (afd.analizeString(cad)) {
+            JOptionPane.showMessageDialog(rootPane, "La cadena es valida", "EXITO", JOptionPane.WARNING_MESSAGE);
+            salidaSis.setText("La cadena es valida");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "La cadena NO es valida", "ERROR", JOptionPane.ERROR_MESSAGE);
+            salidaSis.setText("La cadena NO es valida");
+        }
+        LexicAnalyzer lexic2 = new LexicAnalyzer(cad, afd.getTable());
+        while (true) {
+            Integer yyLexValue = lexic2.yyLex();
+            if (yyLexValue == 0) {
+                break;
+            }
+            consola.append("yyLex:" + yyLexValue + " con lexema " + lexic2.getLexeme()+"\n");
+        }
+    }//GEN-LAST:event_analizarActionPerformed
+
+    private void cerraduraPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerraduraPlusActionPerformed
+        /*Cerradura positiva*/
+        JOptionPane.showMessageDialog(rootPane, "Seleccione el automata para cerradura positiva");
+        afn1 = selectAutomata();
+        afn1.positiveClosure();
+        salidaSis.setText("AFN  " + afn1.getId() + " con cerradura positiva");
+        consola.append(afn1.toString());
+    }//GEN-LAST:event_cerraduraPlusActionPerformed
+
+    private void cerraduraKleeneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerraduraKleeneActionPerformed
+        /*Cerradura de Kleene*/
+        JOptionPane.showMessageDialog(rootPane, "Seleccione el automata para cerradura de Kleene");
+        afn1 = selectAutomata();
+        afn1.kleenClosure();
+        salidaSis.setText("AFN  " + afn1.getId() + " con cerradura de Kleen");
+        consola.append(afn1.toString());
+    }//GEN-LAST:event_cerraduraKleeneActionPerformed
+
+    private void opcionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionalActionPerformed
+        /*Operador opcional*/
+        JOptionPane.showMessageDialog(rootPane, "Seleccione el automata para operador opcional");
+        afn1 = selectAutomata();
+        afn1.optional();
+        salidaSis.setText("AFN  " + afn1.getId() + " con operador opcional");
+        consola.append(afn1.toString());
+    }//GEN-LAST:event_opcionalActionPerformed
+
+    private void singleRegexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_singleRegexActionPerformed
+        /*Generar un automata para una unica expresion regular*/
+
+        String cad = JOptionPane.showInputDialog(rootPane, "Proporciona una expresión de regular");
+        ERAutomataEnhanced_TESTING erA = new ERAutomataEnhanced_TESTING();
+        LexicAnalyzer lexic = new LexicAnalyzer(cad, erA.getAfd().getTable());
+        ERGrammar erG = new ERGrammar(lexic);
+        AFN f = new AFN();
+        erG.E(f);
+        afns.put(f.getId(), f);
+        int tok = Integer.valueOf(JOptionPane.showInputDialog(rootPane, "Ingresa un token para este automata"));
+        f.associateToken(tok);
+    }//GEN-LAST:event_singleRegexActionPerformed
+
+    private void unionTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unionTodosActionPerformed
+        /*Unir todos los automatas*/
+        JOptionPane.showMessageDialog(rootPane, "Se uniran todos los AFN creados hasta el momento");
+        Special us = new Special();
+        us.unir(afns);
+        salidaSis.setText("Se unieron todos los AFNs generados");
+    }//GEN-LAST:event_unionTodosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("..\\Automaton\\Expresiones y gramaticas\\escom.png"));
+        JOptionPane.showMessageDialog(rootPane,"COMPILADORES\n Cuellar Rivera \n Garcia Vera \n Hernandez Mejia","Acerca de", JOptionPane.INFORMATION_MESSAGE);
+        if (JOptionPane.showConfirmDialog(rootPane,"Seguro que desea salir","Proyecto Final Compiladores",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
+            System.exit(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AutomatonGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AutomatonGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AutomatonGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AutomatonGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -181,21 +444,42 @@ public class AutomatonGUI extends javax.swing.JFrame {
         });
     }
 
+    public AFN selectAutomata() {
+        Scanner sc = new Scanner(System.in);
+        afns.forEach((k, v) -> consola.append("Automata " + k + "\n"));
+        int idx = Integer.valueOf(JOptionPane.showInputDialog(rootPane, "Seleccione un indice"));
+        return afns.get(idx);
+    }
+
+    public void asignarTokenAutomata(AFN afn) {
+        IOops io = new IOops();
+        int tok = Integer.valueOf(JOptionPane.showInputDialog(rootPane, "Seleccione el automata a agregar el token"));
+        selectAutomata().associateToken(tok);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem analizar;
+    private javax.swing.JMenuItem cerraduraKleene;
+    private javax.swing.JMenuItem cerraduraPlus;
+    private javax.swing.JMenuItem concatAfn;
+    private java.awt.TextArea consola;
+    private javax.swing.JMenuItem conversor;
+    private javax.swing.JMenuItem fromFile;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JMenuItem nAFN;
+    private javax.swing.JMenuItem opcional;
+    private javax.swing.JLabel salidaSis;
+    private javax.swing.JMenuItem singleRegex;
+    private javax.swing.JMenuItem unionTodos;
+    private javax.swing.JMenuItem unirAfn;
     // End of variables declaration//GEN-END:variables
 }
