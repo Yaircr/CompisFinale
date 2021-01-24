@@ -1,16 +1,15 @@
 com\eycr\calculadora\guiCalculadora$23.class
+com\eycr\calculadora\sintaxCalculatorPost$Number.class
 com\eycr\calculadora\guiCalculadora$4.class
 com\eycr\grammatics\Grammar.class
 com\eycr\gui\AutomatonGUI$7.class
 com\eycr\utilities\StateHandlers.class
 com\eycr\automaton\InterfaceStates.class
-<<<<<<< HEAD
+com\eycr\calculadora\InterfaceCalc.class
 com\eycr\calculadora\guiCalculadora$20.class
+com\eycr\calculadora\ERAutomataCalculadora.class
 com\eycr\calculadora\guiCalculadora$7.class
 com\eycr\calculadora\guiCalculadora$10.class
-=======
-com\eycr\calculadora\InterfaceCalc.class
->>>>>>> 1145617a43a49df3eabf325f30091073ffb05a50
 com\eycr\automaton\InterfaceAFN.class
 com\eycr\gui\AutomatonGUI$4.class
 com\eycr\automaton\Converter.class
@@ -21,6 +20,7 @@ com\eycr\calculadora\guiCalculadora$13.class
 com\eycr\gui\AutomatonGUI$1.class
 com\eycr\utilities\readFile.class
 com\eycr\calculadora\guiCalculadora$19.class
+com\eycr\calculadora\sintaxCalculatorPost.class
 com\eycr\utilities\Special.class
 com\eycr\calculadora\guiCalculadora$24.class
 com\eycr\gui\AutomatonGUI$3.class
@@ -56,24 +56,18 @@ com\eycr\gui\AutomatonGUI$8.class
 com\eycr\utilities\IOops.class
 com\eycr\automaton\TableAFD.class
 com\eycr\calculadora\guiCalculadora$22.class
+com\eycr\calculadora\CalculadoraGenerator.class
 com\eycr\calculadora\guiCalculadora$14.class
 com\eycr\grammatics\GrammarGenerator.class
 com\eycr\automaton\InterfaceAFD.class
 com\eycr\gui\AutomatonGUI$10.class
+com\eycr\calculadora\InterfaceCalcPost.class
 com\eycr\automaton\InterfaceAutomaton.class
-<<<<<<< HEAD
 com\eycr\calculadora\guiCalculadora$3.class
 com\eycr\automaton\Alpha.class
 com\eycr\gui\AutomatonGUI$5.class
 com\eycr\calculadora\constCalculadora.class
 com\eycr\calculadora\guiCalculadora.class
-=======
-com\eycr\grammatics\DerivationNode.class
-com\eycr\calculadora\analizadorSintactico.class
-com\eycr\automaton\Alpha.class
-com\eycr\gui\AutomatonGUI$5.class
-com\eycr\calculadora\constCalculadora.class
->>>>>>> 1145617a43a49df3eabf325f30091073ffb05a50
 com\eycr\automaton\AFD.class
 com\eycr\calculadora\guiCalculadora$6.class
 com\eycr\calculadora\guiCalculadora$17.class

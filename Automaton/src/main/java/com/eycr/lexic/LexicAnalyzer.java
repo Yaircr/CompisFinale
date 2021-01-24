@@ -118,6 +118,7 @@ public class LexicAnalyzer {
     {
         Integer actualState=0;
         hadAcceptedState=false;
+        System.out.println("Caracter actual yyLex: " + actualCharacter);
         if(s.charAt(actualCharacter)=='\0')
         {
             

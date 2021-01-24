@@ -26,21 +26,146 @@ public class guiCalculadora extends javax.swing.JFrame {
     String cadena;
     int numPar_I,numPar_D;
     Stack<String> cadenasTecleadas;
+    private AFD n;
     /**
      * Creates new form guiCalculadora
      */
     public guiCalculadora() {
         initComponents();
         afns=new HashMap<>();
+        initReglas();
         cadena = "";
         numPar_I = 0;
         numPar_D = 0;
         cadenasTecleadas = new Stack<String>();
-        lexic = null;
-        calc = null;
     }
     
-    
+    public void initReglas(){
+        AFN aux = new AFN();
+                
+                AFN Plus = new AFN('+'); //     +
+                AFN Minus = new AFN('-'); //     -
+                AFN Prod = new AFN('*'); //     *
+                AFN Div = new AFN('/'); //     /
+                AFN Poten = new AFN('^'); //     ^
+                AFN ParI = new AFN('('); //     (
+                AFN ParD = new AFN(')'); //     )
+                AFN NumberFloat = new AFN(); //     numero flotante
+                AFN SinA = new AFN(); //     sin
+                AFN CosA = new AFN(); //     cos
+                AFN TanA = new AFN(); //     tan
+                AFN ExpA = new AFN(); //     exp
+                AFN LogA = new AFN(); //     log
+                AFN LnA = new AFN(); //     ln
+
+                Plus.associateToken(10);                
+                Minus.associateToken(20);               
+                Prod.associateToken(30);                
+                Div.associateToken(40);                
+                Poten.associateToken(50);                
+                ParI.associateToken(60);                
+                ParD.associateToken(70);
+
+                //quito el +/-
+                //ParD.createBasic('+');
+                //aux.createBasic('-');
+                //ParD.unir(aux);
+                //ParD.Question();
+                //----------------------------------trigonometricas-------------------------------------------
+                NumberFloat.createBasic('s');
+                aux = new AFN();
+                aux.createBasic('i');
+                NumberFloat.concatenateAFN(aux);
+                aux = new AFN();
+                aux.createBasic('n');
+                NumberFloat.concatenateAFN(aux);
+                NumberFloat.associateToken(80);
+
+                SinA.createBasic('c');
+                aux = new AFN();
+                aux.createBasic('o');
+                SinA.concatenateAFN(aux);
+                aux = new AFN();
+                aux.createBasic('s');
+                SinA.concatenateAFN(aux);
+                SinA.associateToken(90);
+
+                CosA.createBasic('t');
+                aux = new AFN();
+                aux.createBasic('a');
+                CosA.concatenateAFN(aux);
+                aux = new AFN();
+                aux.createBasic('n');
+                CosA.concatenateAFN(aux);
+                CosA.associateToken(100);
+
+                TanA.createBasic('e');
+                aux = new AFN();
+                aux.createBasic('x');
+                TanA.concatenateAFN(aux);
+                aux = new AFN();
+                aux.createBasic('p');
+                TanA.concatenateAFN(aux);
+                TanA.associateToken(110);
+
+                ExpA.createBasic('l');
+                aux = new AFN();
+                aux.createBasic('o');
+                ExpA.concatenateAFN(aux);
+                aux = new AFN();
+                aux.createBasic('g');
+                ExpA.concatenateAFN(aux);
+                ExpA.associateToken(120);
+
+                LogA.createBasic('l');
+                aux = new AFN();
+                aux.createBasic('n');
+                LogA.concatenateAFN(aux);
+                LogA.associateToken(130);
+
+                LnA = new AFN();
+                LnA.createBasic('0', '9');
+                LnA.positiveClosure();
+
+                //ParD.concatenateAFN(num1);
+                AFN punto = new AFN();
+                punto.createBasic('.');
+
+                AFN num1 = new AFN();
+                num1.createBasic('0', '9');
+                num1.positiveClosure();
+
+                punto.concatenateAFN(num1);
+                punto.optional();
+
+                LnA.concatenateAFN(punto);
+                LnA.associateToken(140);
+
+                //unirlos
+                afns.put(Plus.getId(),Plus);
+                afns.put(Minus.getId(),Minus);
+                afns.put(Prod.getId(),Prod);
+                afns.put(Div.getId(),Div);
+                afns.put(Poten.getId(),Poten);
+                afns.put(ParI.getId(),ParI);
+                afns.put(ParD.getId(),ParD);
+                afns.put(NumberFloat.getId(),NumberFloat);
+                afns.put(SinA.getId(),SinA);
+                afns.put(CosA.getId(),CosA);
+                afns.put(TanA.getId(),TanA);
+                afns.put(ExpA.getId(),ExpA);
+                afns.put(LogA.getId(),LogA);
+                afns.put(LnA.getId(),LnA);
+                ArrayList<AFN> automatas = new ArrayList<AFN>();
+                                
+                Special us = new Special();
+                us.unir(afns);
+                //Plus.unirAL(automatas);
+                //Plus.toString();
+                Converter afnConverter = new Converter();                 
+                this.n = afnConverter.convertAFN(Plus);
+                //int numeroInicial = Plus.getInicial().getIdentificador();
+    }
     public String concatenateAFN(String cadConc){
     
         this.cadena = this.cadena + cadConc;
@@ -512,12 +637,15 @@ public class guiCalculadora extends javax.swing.JFrame {
         else{
             //System.out.println("Parentesis correctos");
             String cad = jtxt_calculadora.getText();
+            this.lexic = new LexicAnalyzer(cad,n.getTable());
+            System.out.println("Cadena del jtxt: " + cad);
             if(cad.equals("")){
                 JOptionPane.showMessageDialog(null, "Favor de ingresar una expresión","ERROR",JOptionPane.ERROR_MESSAGE);
             }else{
                 float res;
-                this.lexic.setLexeme(cadena);
+                calc = new sintaxCalculatorPost(n.getTable(),cad);
                 res = this.calc.evaluate();
+                System.out.println("Resultado: " + res);
                 if(res == -1f){
                     jtxt_calculadora.setText("Expresión inválida");
                 }else{
@@ -538,7 +666,7 @@ public class guiCalculadora extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public void main(String args[]) {
+    public static void main(String args[]) {
         
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -566,132 +694,6 @@ public class guiCalculadora extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
-                AFN aux = new AFN();
-                
-                AFN Plus = new AFN('+'); //     +
-                AFN Minus = new AFN('-'); //     -
-                AFN Prod = new AFN('*'); //     *
-                AFN Div = new AFN('/'); //     /
-                AFN Poten = new AFN('^'); //     ^
-                AFN ParI = new AFN('('); //     (
-                AFN ParD = new AFN(')'); //     )
-                AFN NumberFloat = new AFN(); //     numero flotante
-                AFN SinA = new AFN(); //     sin
-                AFN CosA = new AFN(); //     cos
-                AFN TanA = new AFN(); //     tan
-                AFN ExpA = new AFN(); //     exp
-                AFN LogA = new AFN(); //     log
-                AFN LnA = new AFN(); //     ln
-
-                Plus.associateToken(10);                
-                Minus.associateToken(20);               
-                Prod.associateToken(30);                
-                Div.associateToken(40);                
-                Poten.associateToken(50);                
-                ParI.associateToken(60);                
-                ParD.associateToken(70);
-
-                //quito el +/-
-                //ParD.createBasic('+');
-                //aux.createBasic('-');
-                //ParD.unir(aux);
-                //ParD.Question();
-                //----------------------------------trigonometricas-------------------------------------------
-                NumberFloat.createBasic('s');
-                aux = new AFN();
-                aux.createBasic('i');
-                NumberFloat.concatenateAFN(aux);
-                aux = new AFN();
-                aux.createBasic('n');
-                NumberFloat.concatenateAFN(aux);
-                NumberFloat.associateToken(80);
-
-                SinA.createBasic('c');
-                aux = new AFN();
-                aux.createBasic('o');
-                SinA.concatenateAFN(aux);
-                aux = new AFN();
-                aux.createBasic('s');
-                SinA.concatenateAFN(aux);
-                SinA.associateToken(90);
-
-                CosA.createBasic('t');
-                aux = new AFN();
-                aux.createBasic('a');
-                CosA.concatenateAFN(aux);
-                aux = new AFN();
-                aux.createBasic('n');
-                CosA.concatenateAFN(aux);
-                CosA.associateToken(100);
-
-                TanA.createBasic('e');
-                aux = new AFN();
-                aux.createBasic('x');
-                TanA.concatenateAFN(aux);
-                aux = new AFN();
-                aux.createBasic('p');
-                TanA.concatenateAFN(aux);
-                TanA.associateToken(110);
-
-                ExpA.createBasic('l');
-                aux = new AFN();
-                aux.createBasic('o');
-                ExpA.concatenateAFN(aux);
-                aux = new AFN();
-                aux.createBasic('g');
-                ExpA.concatenateAFN(aux);
-                ExpA.associateToken(120);
-
-                LogA.createBasic('l');
-                aux = new AFN();
-                aux.createBasic('n');
-                LogA.concatenateAFN(aux);
-                LogA.associateToken(130);
-
-                LnA = new AFN();
-                LnA.createBasic('0', '9');
-                LnA.positiveClosure();
-
-                //ParD.concatenateAFN(num1);
-                AFN punto = new AFN();
-                punto.createBasic('.');
-
-                AFN num1 = new AFN();
-                num1.createBasic('0', '9');
-                num1.positiveClosure();
-
-                punto.concatenateAFN(num1);
-                punto.optional();
-
-                LnA.concatenateAFN(punto);
-                LnA.associateToken(140);
-
-                //unirlos
-                afns.put(Plus.getId(),Plus);
-                afns.put(Minus.getId(),Minus);
-                afns.put(Prod.getId(),Prod);
-                afns.put(Div.getId(),Div);
-                afns.put(Poten.getId(),Poten);
-                afns.put(ParI.getId(),ParI);
-                afns.put(ParD.getId(),ParD);
-                afns.put(NumberFloat.getId(),NumberFloat);
-                afns.put(SinA.getId(),SinA);
-                afns.put(CosA.getId(),CosA);
-                afns.put(TanA.getId(),TanA);
-                afns.put(ExpA.getId(),ExpA);
-                afns.put(LogA.getId(),LogA);
-                afns.put(LnA.getId(),LnA);
-                ArrayList<AFN> automatas = new ArrayList<AFN>();
-                                
-                Special us = new Special();
-                //us.unir(afns);
-                //Plus.unirAL(automatas);
-                //Plus.toString();
-                Converter afnConverter = new Converter();
-                AFD n;                 
-                n = afnConverter.convertAFN(Plus);                
-                //int numeroInicial = Plus.getInicial().getIdentificador();
                 new guiCalculadora().setVisible(true);
             }
         });

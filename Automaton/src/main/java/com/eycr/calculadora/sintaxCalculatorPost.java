@@ -126,6 +126,10 @@ public class sintaxCalculatorPost {
 
     public boolean F(Number v) {
         int token = lexic.getToken();
+        System.out.println("Token en F: " + token);
+        System.out.println("Cadena obtenida en F" + lexic.getS());
+        System.out.println("Caracter actual" + lexic.getActualCharacter());
+        System.out.println("Init lexem" + lexic.getIniLexeme());
         switch (token) {
         case constCalculadora.PAR_I:
             if (E(v)) {
@@ -204,13 +208,15 @@ public class sintaxCalculatorPost {
 
     public boolean validate(Number v) {
         int token;
+        
         if (E(v)) {
             token = lexic.getToken();
-            token = lexic.getToken();
+            System.out.println("Token de E: " + token);
             if (token == constCalculadora.END) {
                 return true;
             }
         }
+        System.out.println("Funion validate");
         return false;
     }
 
@@ -218,7 +224,7 @@ public class sintaxCalculatorPost {
         if (validate(this.resu)) {
             return this.resu.getValor();
         }
-        //System.out.println("esto se calculo: " + this.resultado.getValor());
+        System.out.println("Eror");
         return -1f;
     }
     
