@@ -13,7 +13,7 @@ import com.eycr.lexic.LexicAnalyzer;
  */
 public class analizadorSintactico {
     
-    private LexicAnalyzer lexic;
+  /*  private LexicAnalyzer lexic;
 
     static final int FIN = 0;
     static final int MAS = 10;
@@ -276,5 +276,5 @@ public class analizadorSintactico {
         }
         ref.flag = false;
         return ref;
-    }    
+    }    */
 }
