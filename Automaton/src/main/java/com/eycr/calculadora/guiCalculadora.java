@@ -140,7 +140,8 @@ public class guiCalculadora extends javax.swing.JFrame {
 
                 LnA.concatenateAFN(punto);
                 LnA.associateToken(140);
-
+                
+                
                 //unirlos
                 afns.put(Plus.getId(),Plus);
                 afns.put(Minus.getId(),Minus);
@@ -160,10 +161,13 @@ public class guiCalculadora extends javax.swing.JFrame {
                                 
                 Special us = new Special();
                 us.unir(afns);
+                System.out.println("AFNS: " + afns.toString());
+                System.out.println("AFN después de unir: " + Plus.toString());
                 //Plus.unirAL(automatas);
                 //Plus.toString();
+                
                 Converter afnConverter = new Converter();                 
-                this.n = afnConverter.convertAFN(Plus);
+                this.n = afnConverter.convertAFN(afns.get(29));
                 //int numeroInicial = Plus.getInicial().getIdentificador();
     }
     public String concatenateAFN(String cadConc){
@@ -230,6 +234,7 @@ public class guiCalculadora extends javax.swing.JFrame {
         par_D = new javax.swing.JButton();
         borrar = new javax.swing.JButton();
         borrar_caracter = new javax.swing.JButton();
+        multiplicacion1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -313,6 +318,11 @@ public class guiCalculadora extends javax.swing.JFrame {
         });
 
         punto.setText(".");
+        punto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                puntoActionPerformed(evt);
+            }
+        });
 
         num_6.setText("6");
         num_6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -405,6 +415,18 @@ public class guiCalculadora extends javax.swing.JFrame {
             }
         });
 
+        multiplicacion1.setText("*");
+        multiplicacion1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                multiplicacion1MouseClicked(evt);
+            }
+        });
+        multiplicacion1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                multiplicacion1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -412,7 +434,10 @@ public class guiCalculadora extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtxt_calculadora)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jtxt_calculadora)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(multiplicacion1))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -469,7 +494,9 @@ public class guiCalculadora extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jtxt_calculadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxt_calculadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(multiplicacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -496,7 +523,7 @@ public class guiCalculadora extends javax.swing.JFrame {
                             .addComponent(punto, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(igual, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(division, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(22, Short.MAX_VALUE))
+                        .addContainerGap(12, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(par_I, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -663,6 +690,20 @@ public class guiCalculadora extends javax.swing.JFrame {
         jtxt_calculadora.setText(borrarCaracter());
     }//GEN-LAST:event_borrar_caracterMouseClicked
 
+    private void puntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_puntoActionPerformed
+        jtxt_calculadora.setText(concatenateAFN("."));
+        cadenasTecleadas.push(".");
+    }//GEN-LAST:event_puntoActionPerformed
+
+    private void multiplicacion1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_multiplicacion1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_multiplicacion1MouseClicked
+
+    private void multiplicacion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiplicacion1ActionPerformed
+        jtxt_calculadora.setText(concatenateAFN("^"));
+        cadenasTecleadas.push("^");
+    }//GEN-LAST:event_multiplicacion1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -711,6 +752,7 @@ public class guiCalculadora extends javax.swing.JFrame {
     private javax.swing.JButton mas;
     private javax.swing.JButton menos;
     private javax.swing.JButton multiplicacion;
+    private javax.swing.JButton multiplicacion1;
     private javax.swing.JButton num_0;
     private javax.swing.JButton num_1;
     private javax.swing.JButton num_2;

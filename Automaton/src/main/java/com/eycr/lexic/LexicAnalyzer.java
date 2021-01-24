@@ -126,9 +126,12 @@ public class LexicAnalyzer {
         }
         p.push(actualCharacter);
         iniLexeme=actualCharacter;
+        System.out.println("IniLexeme en yyLex: " + iniLexeme);
         while(s.charAt(actualCharacter)!='\0')
         {
+            System.out.println("Carácter actual: " + s.charAt(actualCharacter));
             Integer indiceAlfabeto=-1;
+            System.out.println("Simbolos: " + afdTable.getSymbols());
             if(afdTable.getSymbols().containsKey(s.charAt(actualCharacter)))
             {
                 indiceAlfabeto=afdTable.getSymbols().get(s.charAt(actualCharacter));
