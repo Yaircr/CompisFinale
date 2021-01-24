@@ -14,7 +14,7 @@ import com.eycr.lexic.LexicAnalyzer;
  */
 public class analizadorSintactico {
     
-    private LexicAnalyzer lexic;
+  /*  private LexicAnalyzer lexic;
 
     private float res = 0;
 
@@ -262,5 +262,9 @@ public class analizadorSintactico {
         }
         ref.flag = false;
         return ref;
+<<<<<<< HEAD
+    }    */
+=======
     }
+>>>>>>> 1145617a43a49df3eabf325f30091073ffb05a50
 }

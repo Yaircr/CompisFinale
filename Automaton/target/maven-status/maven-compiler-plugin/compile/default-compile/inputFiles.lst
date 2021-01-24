@@ -1,3 +1,35 @@
+<<<<<<< HEAD
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\automaton\InterfaceStates.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\grammatics\DerivationNode.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\automaton\InterfaceAFD.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\utilities\readFile.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\calculadora\analizadorSintactico.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\utilities\Special.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\calculadora\constCalculadora.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\gui\AutomatonGUI.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\grammatics\Grammar.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\utilities\IOops.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\automaton\AFN.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\gui\ConsoleMenu.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\automaton\Transition.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\automaton\TableAFD.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\automaton\AFD.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\grammatics\ERGrammar.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\automaton\Alpha.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\automaton\Converter.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\automaton\PlaceState.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\grammatics\GrammarGenerator.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\calculadora\guiCalculadora.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\regex\ERAutomata.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\automaton\InterfaceAFN.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\automaton\State.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\lexic\LexicAnalyzer.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\utilities\Const.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\automaton\InterfaceAutomaton.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\grammatics\GramarTest.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\regex\ERAutomataEnhanced_TESTING.java
+C:\Users\Jared\Documents\Compiladores\Proyecto final\CompisFinale\Automaton\src\main\java\com\eycr\utilities\StateHandlers.java
+=======
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\automaton\Converter.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\grammatics\DerivationNode.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\regex\ERAutomata.java
@@ -7,7 +39,9 @@ D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\utilities\IOops.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\regex\ERAutomataEnhanced_TESTING.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\automaton\PlaceState.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\automaton\TableAFD.java
+D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\calculadora\analizadorSintactico.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\gui\AutomatonGUI.java
+D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\calculadora\InterfaceCalc.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\grammatics\Grammar.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\utilities\readFile.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\lexic\LexicAnalyzer.java
@@ -19,9 +53,11 @@ D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\automaton\State.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\grammatics\ERGrammar.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\automaton\InterfaceAFN.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\automaton\Alpha.java
+D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\calculadora\constCalculadora.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\utilities\Special.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\automaton\InterfaceAutomaton.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\utilities\Const.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\grammatics\GramarTest.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\automaton\InterfaceStates.java
 D:\GIT\CompisFinale\Automaton\src\main\java\com\eycr\automaton\AFD.java
+>>>>>>> 1145617a43a49df3eabf325f30091073ffb05a50
