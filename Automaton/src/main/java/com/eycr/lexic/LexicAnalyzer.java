@@ -153,9 +153,7 @@ public class LexicAnalyzer {
                 actualCharacter++;               
             }
             else
-            {
-                
-                //System.out.println("TRUENA AQUI2 con i="+actualState+" y j="+indiceAlfabeto);
+            {                                
                 return asteriscoVerde();
             }
         }

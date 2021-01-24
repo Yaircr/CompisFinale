@@ -18,11 +18,15 @@ import com.eycr.automaton.AFN;
 import com.eycr.automaton.Converter;
 import com.eycr.automaton.InterfaceAFN;
 import com.eycr.automaton.PlaceState;
+import com.eycr.calculadora.InterfaceCalcPost;
+import com.eycr.calculadora.analizadorSintactico;
+import com.eycr.calculadora.sintaxCalculatorPost;
 import com.eycr.regex.ERAutomataEnhanced_TESTING;
 import com.eycr.lexic.LexicAnalyzer;
 import com.eycr.utilities.IOops;
 import com.eycr.utilities.Special;
 import com.eycr.grammatics.ERGrammar;
+import com.eycr.calculadora.ERAutomataCalculadora;
 
 import com.eycr.utilities.readFile;
 import java.io.File;
@@ -182,8 +186,10 @@ public class ConsoleMenu {
                     AFN f=new AFN();
                     erG.E(f);
                     afns.put(f.getId(), f);
+                    f.toString();
                     System.out.println("Ingresa un token para este automata =)");
                     f.associateToken(io.askForToken());
+                    
                     break;
                 case 10:
                     Special us=new Special();
@@ -194,7 +200,7 @@ public class ConsoleMenu {
                     
                 case 11:
                     String path;
-                    String carpeta = "C:\\Users\\Jared\\Documents\\Compiladores\\Proyecto final\\CompisFinale\\Automaton\\Expresiones y gramaticas";
+                    String carpeta = "..\\Automaton\\Expresiones y gramaticas";
                     readFile archivo = new readFile();
                     File carpetaLista = new File(carpeta);
                     String[] listado = carpetaLista.list();
@@ -245,6 +251,77 @@ public class ConsoleMenu {
                     
                     System.out.println("Se unieron todos los AFNs generados");
                     break;    
+                case 12:
+                    System.out.println("**Calculadora**");
+                    System.out.println("Ingresa operación");
+                    String cad2=sc.next();
+                    System.out.println("Cadena="+cad2);
+                    afd.getTable().print();
+                    sintaxCalculatorPost sintaxCalc;
+                    sintaxCalc = new sintaxCalculatorPost(afd.getTable(), cad2);
+                    InterfaceCalcPost Result = new InterfaceCalcPost("0",false);
+                    Result = sintaxCalc.E(cad2);
+                    if(Result.flag){
+                        System.out.println("El resultado es: "+Result.res);
+                    }else{
+                        System.out.println("La cadena NO es valida");
+                    }
+                    
+                    break;
+                    
+                case 13:
+                    String path2;
+                    String carpeta2 = "..\\Automaton\\Expresiones y gramaticas";
+                    readFile archivo2 = new readFile();
+                    File carpetaLista2 = new File(carpeta2);
+                    String[] listado2 = carpetaLista2.list();
+                    if (listado2 == null || listado2.length == 0) {
+                        System.out.println("No hay elementos dentro de la carpeta actual");
+                        return;
+                    }
+                    else {
+                        System.out.println("Archivos disponibles: ");
+                        for (String listado3 : listado2) {
+                            System.out.println(listado3);
+                        }
+                    }
+                    System.out.println("¿Qué archivo quiere leer?");
+                    Scanner sc2 = new Scanner(System.in);
+                    path = sc2.nextLine();
+                    List<String> renglones2 = new ArrayList<String>();  
+                    renglones2 = archivo2.lineasArchivoLista(path);
+                    //System.out.println(renglones);
+                    try{
+                        /*MANEJO DE ARCHIVO PARA REGEX*/
+                         AFN ffile=new AFN();
+			for(int i = 0; i < renglones2.size(); i++){
+                               
+                                /*SI ES LINEA IMPAR ES REGEX*/
+                                if(i%2 == 0){
+                                    String cadenaRegex = renglones2.get(i).toString();
+                                    ERAutomataCalculadora erFF=new ERAutomataCalculadora();
+                                    LexicAnalyzer lexicFF=new LexicAnalyzer(cadenaRegex,erFF.getAfd().getTable());
+                                    ERGrammar erGFF=new ERGrammar(lexicFF);
+                                    
+                                    erGFF.E(ffile);
+                                    afns.put(ffile.getId(), ffile);
+                                }else{
+                                    /*SEGUNDA LINEA LEIDA CORRESPONDE A SU TOKEN*/
+                                    int tok = Integer.valueOf(renglones2.get(i).toString());
+                                    ffile.associateToken(tok);
+                                    ffile=new AFN();
+                                }
+                                
+			}
+			
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    Special usff2=new Special();
+                    usff2.unir(afns);
+                    afns.toString();
+                    System.out.println("Se unieron todos los AFNs generados");
+                    break;  
                 default: System.exit(0);
             }    
         }
