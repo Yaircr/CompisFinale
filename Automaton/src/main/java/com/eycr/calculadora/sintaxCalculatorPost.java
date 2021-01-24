@@ -16,12 +16,213 @@ public class sintaxCalculatorPost {
     LexicAnalyzer lexic;    
 
     private float res = 0;
-
+    
+    public class Number{
+        private float valor;
+        /**
+         * @param valor actualizacion de valor numerico
+         */
+        public float getValor() {
+            return valor;
+        }
+        /**
+         * 
+         * @return valor actual
+         */
+        public void setValor(float valor) {
+            this.valor = valor;
+        }
+        
+        public Number(){
+            this.valor = 0f;
+        }
+    }
+    private final Number resu = new Number();
+    private LexicAnalyzer lexic2;
+        
     public sintaxCalculatorPost(TableAFD afd, String s) {
         lexic = new LexicAnalyzer(s, afd);
     }
+    
+    public boolean E(Number v) {
+        if (T(v)) {
+            if (Ep(v)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-    public InterfaceCalcPost ini() {
+    public boolean Ep(Number v) {
+        int token;
+        Number v1 = new Number();
+        token = lexic.getToken();
+
+        if (token == constCalculadora.ADD || token == constCalculadora.MIN) {
+            if (T(v1)) {
+                v.setValor(v.getValor() + ((token == constCalculadora.ADD) ? v1.getValor() : -v1.getValor()));
+
+                if (Ep(v)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        lexic.undoYylex();
+        return true;
+    }
+
+    public boolean T(Number v) {
+        if (P(v)) {
+            if (Tp(v)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean Tp(Number v) {
+        int token;
+        Number v1 = new Number();
+        token = lexic.getToken();
+        if (token == constCalculadora.MUL || token == constCalculadora.DIV) {
+            if (P(v1)) {
+                v.setValor(v.getValor() * ((token == constCalculadora.MUL) ? v1.getValor() : 1f / v1.getValor()));
+                if (Tp(v)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        lexic.undoYylex();
+        return true;
+    }
+
+    public boolean P(Number v) {
+        if (F(v)) {
+            if (Pp(v)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean Pp(Number v) {
+        int token;
+        Number v1 = new Number();
+        token = lexic.getToken();
+        if (token == constCalculadora.POWE) {
+            if (F(v1)) {
+                v.setValor((float) Math.pow(v.getValor(), v1.getValor()));
+                if (Pp(v)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        lexic.undoYylex();
+        return true;
+    }
+
+    public boolean F(Number v) {
+        int token = lexic.getToken();
+        switch (token) {
+        case constCalculadora.PAR_I:
+            if (E(v)) {
+                token = this.lexic.getToken();
+                if (token == constCalculadora.PAR_D) {
+                    return true;
+                }
+            }
+            return false;
+        case constCalculadora.SIN:
+            token = lexic.getToken();
+            if (verificarParentesis(token, v)) {
+                v.setValor((float) Math.sin(v.getValor()));
+                return true;
+            }
+            return false;
+        case constCalculadora.COS:
+            token = lexic.getToken();
+            if (verificarParentesis(token, v)) {
+                v.setValor((float) Math.cos(v.getValor()));
+                return true;
+            }
+            return false;
+
+        case constCalculadora.TAN:
+            token = lexic.getToken();
+            if (verificarParentesis(token, v)) {
+                v.setValor((float) Math.tan(v.getValor()));
+                return true;
+            }
+            return false;
+
+        case constCalculadora.EXP:
+            token = lexic.getToken();
+            if (verificarParentesis(token, v)) {
+                v.setValor((float) Math.exp(v.getValor()));
+                return true;
+            }
+            return false;
+
+        case constCalculadora.LOG:
+            token = lexic.getToken();
+            if (verificarParentesis(token, v)) {
+                v.setValor((float) Math.log10(v.getValor()));
+                return true;
+            }
+            return false;
+
+        case constCalculadora.LN:
+            token = lexic.getToken();
+            if (verificarParentesis(token, v)) {
+                v.setValor((float) Math.log(v.getValor()));
+                return true;
+            }
+            return false;
+
+        case constCalculadora.NUM:
+            v.setValor(Float.parseFloat(lexic.getLexeme()));
+            return true;
+        }
+        return false;
+    }
+
+    public boolean verificarParentesis(int tok, Number v) {
+        if (tok == constCalculadora.PAR_I) {
+            if (E(v)) {
+                int token = lexic.getToken();
+                if (token == constCalculadora.PAR_D) {
+                    return true;
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public boolean validar(Number v) {
+        int token;
+        if (E(v)) {
+            token = lexic.getToken();
+            token = lexic.getToken();
+            if (token == constCalculadora.END) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public float evaluar() {
+        if (validar(this.resu)) {
+            return this.resu.getValor();
+        }
+        //System.out.println("esto se calculo: " + this.resultado.getValor());
+        return -1f;
+    }
+    
+    /*public InterfaceCalcPost ini() {
         int token = -1;
         
         String res = "";
@@ -36,9 +237,9 @@ public class sintaxCalculatorPost {
         }
         ref.flag = false;
         return ref;
-    }
+    }*/
 
-    public InterfaceCalcPost E(String res) {
+    /*public InterfaceCalcPost E(String res) {
         InterfaceCalcPost ref = new InterfaceCalcPost(res, false);
         if ((ref = T(ref.res)).flag) {
             if ((ref = Ep(ref.res)).flag) {
@@ -114,7 +315,7 @@ public class sintaxCalculatorPost {
             ref.flag = false;
             return ref;
         }
-        else if(token == constCalculadora.DIV){
+        else if(token == constCalculadora.constCalculadora.DIV){
             if ((ref_2 = P(ref_2.res)).flag) {
                 res = res + ref_2.res + "/";
                 ref.res = res;
@@ -169,22 +370,22 @@ public class sintaxCalculatorPost {
         token = lexic.getToken();
         InterfaceCalcPost ref = new InterfaceCalcPost(res, false);
         switch (token) {
-            case constCalculadora.PAR_I:
+            case constCalculadora.constCalculadora.PAR_I:
                 if ((ref = E(ref.res)).flag) {
                     token = lexic.getToken();
-                    if (token == constCalculadora.PAR_D) {
+                    if (token == constCalculadora.constCalculadora.PAR_D) {
                         ref.flag = true;
                         return ref;
                     }
                 }
                 ref.flag = false;
                 return ref;
-            case constCalculadora.SIN:
+            case constCalculadora.constCalculadora.SIN:
                 token = lexic.getToken();
-                if (token == constCalculadora.PAR_I) {
+                if (token == constCalculadora.constCalculadora.PAR_I) {
                     if ((ref = E(ref.res)).flag) {
                         token = lexic.getToken();
-                        if (token == constCalculadora.PAR_D) {
+                        if (token == constCalculadora.constCalculadora.PAR_D) {
                             res = res + "sin()";
                             ref.res = res;
                             ref.flag = true;
@@ -194,12 +395,12 @@ public class sintaxCalculatorPost {
                 }
                 ref.flag = false;
                 return ref;
-            case constCalculadora.COS:
+            case constCalculadora.constCalculadora.COS:
                 token = lexic.getToken();
-                if (token == constCalculadora.PAR_I) {
+                if (token == constCalculadora.constCalculadora.PAR_I) {
                     if ((ref = E(ref.res)).flag) {
                         token = lexic.getToken();
-                        if (token == constCalculadora.PAR_D) {
+                        if (token == constCalculadora.constCalculadora.PAR_D) {
                             res = res + "cos()";
                             ref.res = res;
                             ref.flag = true;
@@ -211,10 +412,10 @@ public class sintaxCalculatorPost {
                 return ref;
             case constCalculadora.TAN:
                 token = lexic.getToken();
-                if (token == constCalculadora.PAR_I) {
+                if (token == constCalculadora.constCalculadora.PAR_I) {
                     if ((ref = E(ref.res)).flag) {
                         token = lexic.getToken();
-                        if (token == constCalculadora.PAR_D) {
+                        if (token == constCalculadora.constCalculadora.PAR_D) {
                             res = res + "tan()";
                             ref.res = res;
                             ref.flag = true;
@@ -226,10 +427,10 @@ public class sintaxCalculatorPost {
                 return ref;
             case constCalculadora.LN:
                 token = lexic.getToken();
-                if (token == constCalculadora.PAR_I) {
+                if (token == constCalculadora.constCalculadora.PAR_I) {
                     if ((ref = E(ref.res)).flag) {
                         token = lexic.getToken();
-                        if (token == constCalculadora.PAR_D) {
+                        if (token == constCalculadora.constCalculadora.PAR_D) {
                             res = res + "ln()";
                             ref.res = res;
                             ref.flag = true;
@@ -241,10 +442,10 @@ public class sintaxCalculatorPost {
                 return ref;
             case constCalculadora.LOG:
                 token = lexic.getToken();
-                if (token == constCalculadora.PAR_I) {
+                if (token == constCalculadora.constCalculadora.PAR_I) {
                     if ((ref = E(ref.res)).flag) {
                         token = lexic.getToken();
-                        if (token == constCalculadora.PAR_D) {
+                        if (token == constCalculadora.constCalculadora.PAR_D) {
                             res = res + "log()";
                             ref.res = res;
                             ref.flag = true;
@@ -261,5 +462,5 @@ public class sintaxCalculatorPost {
         }
         ref.flag = false;
         return ref;
-    }
+    }*/
 }

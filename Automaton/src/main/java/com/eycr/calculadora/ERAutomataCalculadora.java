@@ -29,12 +29,12 @@ public class ERAutomataCalculadora {
         AFN f15=new AFN('/');
         f15.associateToken(constCalculadora.DIV);  
         AFN f16 = new AFN('*');
-        f16.associateToken(constCalculadora.PROD);
+        //f16.associateToken(constCalculadora.PROD);
         
         AFN f4=new AFN('0','9');    
         AFN f7=new AFN('.');      
         f4.addAFN(f7);
-        f4.associateToken(constCalculadora.SIMB);
+        //f4.associateToken(constCalculadora.SIMB);
         
         AFN f8=new AFN('&');
         f8.associateToken(Const.CONC);

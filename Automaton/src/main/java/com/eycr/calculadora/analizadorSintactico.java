@@ -264,7 +264,4 @@ public class analizadorSintactico {
         return ref;
 <<<<<<< HEAD
     }    */
-=======
-    }
->>>>>>> 1145617a43a49df3eabf325f30091073ffb05a50
 }
