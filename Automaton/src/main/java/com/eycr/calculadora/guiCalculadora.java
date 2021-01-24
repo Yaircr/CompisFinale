@@ -5,14 +5,24 @@
  */
 package com.eycr.calculadora;
 
+import com.eycr.automaton.AFD;
+import com.eycr.automaton.AFN;
+import com.eycr.automaton.Converter;
+import com.eycr.lexic.LexicAnalyzer;
+import com.eycr.utilities.Special;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author Jared
+ 
  */
 public class guiCalculadora extends javax.swing.JFrame {
-
+    private HashMap<Integer,AFN> afns; //HASH de AFNS
+    private LexicAnalyzer lexic;
+    private sintaxCalculatorPost calc;
     String cadena;
     int numPar_I,numPar_D;
     Stack<String> cadenasTecleadas;
@@ -21,14 +31,17 @@ public class guiCalculadora extends javax.swing.JFrame {
      */
     public guiCalculadora() {
         initComponents();
+        afns=new HashMap<>();
         cadena = "";
         numPar_I = 0;
         numPar_D = 0;
         cadenasTecleadas = new Stack<String>();
+        lexic = null;
+        calc = null;
     }
     
     
-    public String concatenar(String cadConc){
+    public String concatenateAFN(String cadConc){
     
         this.cadena = this.cadena + cadConc;
         return this.cadena;
@@ -360,11 +373,12 @@ public class guiCalculadora extends javax.swing.JFrame {
                             .addComponent(division, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(22, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(par_I, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(par_D, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(borrar)
-                            .addComponent(borrar_caracter))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(par_D, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(borrar)
+                                .addComponent(borrar_caracter)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(sin)
                         .addGap(18, 18, 18)
@@ -382,109 +396,109 @@ public class guiCalculadora extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void num_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_num_1MouseClicked
-        jtxt_calculadora.setText(concatenar("1"));
+        jtxt_calculadora.setText(concatenateAFN("1"));
         cadenasTecleadas.push("1");
     }//GEN-LAST:event_num_1MouseClicked
 
     private void num_2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_num_2MouseClicked
-        jtxt_calculadora.setText(concatenar("2"));
+        jtxt_calculadora.setText(concatenateAFN("2"));
         cadenasTecleadas.push("2");
     }//GEN-LAST:event_num_2MouseClicked
 
     private void num_3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_num_3MouseClicked
-        jtxt_calculadora.setText(concatenar("3"));
+        jtxt_calculadora.setText(concatenateAFN("3"));
         cadenasTecleadas.push("3");
     }//GEN-LAST:event_num_3MouseClicked
 
     private void num_4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_num_4MouseClicked
-        jtxt_calculadora.setText(concatenar("4"));
+        jtxt_calculadora.setText(concatenateAFN("4"));
         cadenasTecleadas.push("4");
     }//GEN-LAST:event_num_4MouseClicked
 
     private void num_5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_num_5MouseClicked
-        jtxt_calculadora.setText(concatenar("5"));
+        jtxt_calculadora.setText(concatenateAFN("5"));
         cadenasTecleadas.push("5");
     }//GEN-LAST:event_num_5MouseClicked
 
     private void num_6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_num_6MouseClicked
-        jtxt_calculadora.setText(concatenar("6"));
+        jtxt_calculadora.setText(concatenateAFN("6"));
         cadenasTecleadas.push("6");
     }//GEN-LAST:event_num_6MouseClicked
 
     private void num_7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_num_7MouseClicked
-        jtxt_calculadora.setText(concatenar("7"));
+        jtxt_calculadora.setText(concatenateAFN("7"));
         cadenasTecleadas.push("7");
     }//GEN-LAST:event_num_7MouseClicked
 
     private void num_8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_num_8MouseClicked
-        jtxt_calculadora.setText(concatenar("8"));
+        jtxt_calculadora.setText(concatenateAFN("8"));
         cadenasTecleadas.push("8");
     }//GEN-LAST:event_num_8MouseClicked
 
     private void num_9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_num_9MouseClicked
-        jtxt_calculadora.setText(concatenar("9"));
+        jtxt_calculadora.setText(concatenateAFN("9"));
         cadenasTecleadas.push("9");
     }//GEN-LAST:event_num_9MouseClicked
 
     private void num_0MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_num_0MouseClicked
-        jtxt_calculadora.setText(concatenar("0"));
+        jtxt_calculadora.setText(concatenateAFN("0"));
         cadenasTecleadas.push("0");
     }//GEN-LAST:event_num_0MouseClicked
 
     private void masMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masMouseClicked
-        jtxt_calculadora.setText(concatenar("+"));
+        jtxt_calculadora.setText(concatenateAFN("+"));
         cadenasTecleadas.push("+");
     }//GEN-LAST:event_masMouseClicked
 
     private void menosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menosMouseClicked
-        jtxt_calculadora.setText(concatenar("-"));
+        jtxt_calculadora.setText(concatenateAFN("-"));
         cadenasTecleadas.push("-");
     }//GEN-LAST:event_menosMouseClicked
 
     private void multiplicacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_multiplicacionMouseClicked
-        jtxt_calculadora.setText(concatenar("*"));
+        jtxt_calculadora.setText(concatenateAFN("*"));
         cadenasTecleadas.push("*");
     }//GEN-LAST:event_multiplicacionMouseClicked
 
     private void divisionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_divisionMouseClicked
-        jtxt_calculadora.setText(concatenar("/"));
+        jtxt_calculadora.setText(concatenateAFN("/"));
         cadenasTecleadas.push("/");
     }//GEN-LAST:event_divisionMouseClicked
 
     private void par_IMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_par_IMouseClicked
-        jtxt_calculadora.setText(concatenar("("));
+        jtxt_calculadora.setText(concatenateAFN("("));
         numPar_I ++;
         cadenasTecleadas.push("(");
     }//GEN-LAST:event_par_IMouseClicked
 
     private void par_DMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_par_DMouseClicked
-        jtxt_calculadora.setText(concatenar(")"));
+        jtxt_calculadora.setText(concatenateAFN(")"));
         numPar_D ++;
         cadenasTecleadas.push(")");
     }//GEN-LAST:event_par_DMouseClicked
 
     private void sinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sinMouseClicked
-        jtxt_calculadora.setText(concatenar("sin"));
+        jtxt_calculadora.setText(concatenateAFN("sin"));
         cadenasTecleadas.push("sin");
     }//GEN-LAST:event_sinMouseClicked
 
     private void cosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cosMouseClicked
-        jtxt_calculadora.setText(concatenar("cos"));
+        jtxt_calculadora.setText(concatenateAFN("cos"));
         cadenasTecleadas.push("cos");
     }//GEN-LAST:event_cosMouseClicked
 
     private void tanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tanMouseClicked
-        jtxt_calculadora.setText(concatenar("tan"));
+        jtxt_calculadora.setText(concatenateAFN("tan"));
         cadenasTecleadas.push("tan");
     }//GEN-LAST:event_tanMouseClicked
 
     private void lnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lnMouseClicked
-        jtxt_calculadora.setText(concatenar("ln"));
+        jtxt_calculadora.setText(concatenateAFN("ln"));
         cadenasTecleadas.push("ln");
     }//GEN-LAST:event_lnMouseClicked
 
     private void logMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logMouseClicked
-        jtxt_calculadora.setText(concatenar("log"));
+        jtxt_calculadora.setText(concatenateAFN("log"));
         cadenasTecleadas.push("log");
     }//GEN-LAST:event_logMouseClicked
 
@@ -495,8 +509,22 @@ public class guiCalculadora extends javax.swing.JFrame {
                else
                jtxt_calculadora.setText("Mas parentesis que abren de los que cierran");
         }
-        else
-        System.out.println("Parentesis correctos");
+        else{
+            //System.out.println("Parentesis correctos");
+            String cad = jtxt_calculadora.getText();
+            if(cad.equals("")){
+                JOptionPane.showMessageDialog(null, "Favor de ingresar una expresión","ERROR",JOptionPane.ERROR_MESSAGE);
+            }else{
+                float res;
+                this.lexic.setLexeme(cadena);
+                res = this.calc.evaluate();
+                if(res == -1f){
+                    jtxt_calculadora.setText("Expresión inválida");
+                }else{
+                    jtxt_calculadora.setText(Float.toString(res));
+                }
+            }                
+        }
     }//GEN-LAST:event_igualMouseClicked
 
     private void borrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrarMouseClicked
@@ -510,7 +538,8 @@ public class guiCalculadora extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public void main(String args[]) {
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -537,6 +566,132 @@ public class guiCalculadora extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
+                AFN aux = new AFN();
+                
+                AFN Plus = new AFN('+'); //     +
+                AFN Minus = new AFN('-'); //     -
+                AFN Prod = new AFN('*'); //     *
+                AFN Div = new AFN('/'); //     /
+                AFN Poten = new AFN('^'); //     ^
+                AFN ParI = new AFN('('); //     (
+                AFN ParD = new AFN(')'); //     )
+                AFN NumberFloat = new AFN(); //     numero flotante
+                AFN SinA = new AFN(); //     sin
+                AFN CosA = new AFN(); //     cos
+                AFN TanA = new AFN(); //     tan
+                AFN ExpA = new AFN(); //     exp
+                AFN LogA = new AFN(); //     log
+                AFN LnA = new AFN(); //     ln
+
+                Plus.associateToken(10);                
+                Minus.associateToken(20);               
+                Prod.associateToken(30);                
+                Div.associateToken(40);                
+                Poten.associateToken(50);                
+                ParI.associateToken(60);                
+                ParD.associateToken(70);
+
+                //quito el +/-
+                //ParD.createBasic('+');
+                //aux.createBasic('-');
+                //ParD.unir(aux);
+                //ParD.Question();
+                //----------------------------------trigonometricas-------------------------------------------
+                NumberFloat.createBasic('s');
+                aux = new AFN();
+                aux.createBasic('i');
+                NumberFloat.concatenateAFN(aux);
+                aux = new AFN();
+                aux.createBasic('n');
+                NumberFloat.concatenateAFN(aux);
+                NumberFloat.associateToken(80);
+
+                SinA.createBasic('c');
+                aux = new AFN();
+                aux.createBasic('o');
+                SinA.concatenateAFN(aux);
+                aux = new AFN();
+                aux.createBasic('s');
+                SinA.concatenateAFN(aux);
+                SinA.associateToken(90);
+
+                CosA.createBasic('t');
+                aux = new AFN();
+                aux.createBasic('a');
+                CosA.concatenateAFN(aux);
+                aux = new AFN();
+                aux.createBasic('n');
+                CosA.concatenateAFN(aux);
+                CosA.associateToken(100);
+
+                TanA.createBasic('e');
+                aux = new AFN();
+                aux.createBasic('x');
+                TanA.concatenateAFN(aux);
+                aux = new AFN();
+                aux.createBasic('p');
+                TanA.concatenateAFN(aux);
+                TanA.associateToken(110);
+
+                ExpA.createBasic('l');
+                aux = new AFN();
+                aux.createBasic('o');
+                ExpA.concatenateAFN(aux);
+                aux = new AFN();
+                aux.createBasic('g');
+                ExpA.concatenateAFN(aux);
+                ExpA.associateToken(120);
+
+                LogA.createBasic('l');
+                aux = new AFN();
+                aux.createBasic('n');
+                LogA.concatenateAFN(aux);
+                LogA.associateToken(130);
+
+                LnA = new AFN();
+                LnA.createBasic('0', '9');
+                LnA.positiveClosure();
+
+                //ParD.concatenateAFN(num1);
+                AFN punto = new AFN();
+                punto.createBasic('.');
+
+                AFN num1 = new AFN();
+                num1.createBasic('0', '9');
+                num1.positiveClosure();
+
+                punto.concatenateAFN(num1);
+                punto.optional();
+
+                LnA.concatenateAFN(punto);
+                LnA.associateToken(140);
+
+                //unirlos
+                afns.put(Plus.getId(),Plus);
+                afns.put(Minus.getId(),Minus);
+                afns.put(Prod.getId(),Prod);
+                afns.put(Div.getId(),Div);
+                afns.put(Poten.getId(),Poten);
+                afns.put(ParI.getId(),ParI);
+                afns.put(ParD.getId(),ParD);
+                afns.put(NumberFloat.getId(),NumberFloat);
+                afns.put(SinA.getId(),SinA);
+                afns.put(CosA.getId(),CosA);
+                afns.put(TanA.getId(),TanA);
+                afns.put(ExpA.getId(),ExpA);
+                afns.put(LogA.getId(),LogA);
+                afns.put(LnA.getId(),LnA);
+                ArrayList<AFN> automatas = new ArrayList<AFN>();
+                                
+                Special us = new Special();
+                //us.unir(afns);
+                //Plus.unirAL(automatas);
+                //Plus.toString();
+                Converter afnConverter = new Converter();
+                AFD n;                 
+                n = afnConverter.convertAFN(Plus);                
+                //int numeroInicial = Plus.getInicial().getIdentificador();
                 new guiCalculadora().setVisible(true);
             }
         });

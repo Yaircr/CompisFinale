@@ -202,7 +202,7 @@ public class sintaxCalculatorPost {
         return false;
     }
 
-    public boolean validar(Number v) {
+    public boolean validate(Number v) {
         int token;
         if (E(v)) {
             token = lexic.getToken();
@@ -214,8 +214,8 @@ public class sintaxCalculatorPost {
         return false;
     }
 
-    public float evaluar() {
-        if (validar(this.resu)) {
+    public float evaluate() {
+        if (validate(this.resu)) {
             return this.resu.getValor();
         }
         //System.out.println("esto se calculo: " + this.resultado.getValor());

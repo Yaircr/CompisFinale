@@ -251,7 +251,7 @@ public class ConsoleMenu {
                     
                     System.out.println("Se unieron todos los AFNs generados");
                     break;    
-                case 12:
+                /*case 12:
                     System.out.println("**Calculadora**");
                     System.out.println("Ingresa operación");
                     String cad2=sc.next();
@@ -267,7 +267,7 @@ public class ConsoleMenu {
                         System.out.println("La cadena NO es valida");
                     }
                     
-                    break;
+                    break;*/
                     
                 case 13:
                     String path2;
