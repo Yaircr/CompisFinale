@@ -27,7 +27,7 @@ public class GramarTest {
      */
     public static void main(String[] args) {
         String path;
-        String carpeta = "C:\\Users\\Jared\\Documents\\Compiladores\\Proyecto final\\CompisFinale\\Automaton\\Expresiones y gramaticas";
+        String carpeta = "..\\Automaton\\Expresiones y gramaticas";
         readFile archivo = new readFile();
         File carpetaLista = new File(carpeta);
         String[] listado = carpetaLista.list();

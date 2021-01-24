@@ -5,6 +5,7 @@
  */
 package com.eycr.calculadora;
 
+import com.eycr.automaton.TableAFD;
 import com.eycr.lexic.LexicAnalyzer;
 
 /**
@@ -15,36 +16,21 @@ public class analizadorSintactico {
     
   /*  private LexicAnalyzer lexic;
 
-    static final int FIN = 0;
-    static final int MAS = 10;
-    static final int MENOS = 20;
-    static final int PROD = 30;
-    static final int DIV = 40;
-    static final int POT = 50;
-    static final int PAR_I = 60;
-    static final int PAR_D = 70;
-    static final int NUM = 80;
-    static final int SIN = 90;
-    static final int COS = 100;
-    static final int TAN = 110;
-    static final int LN = 120;
-    static final int LOG = 130;
+    private float res = 0;
 
-    private float resultado = 0;
-
-    SintaxCalculadoraPostfijo(AFD afd, String s) {
-        lexic = new AnalizadorLexico(afd, s);
+    analizadorSintactico(TableAFD afd, String s) {
+        lexic = new LexicAnalyzer(s, afd);
     }
 
-    public ReferenciaCP ini() {
+    public InterfaceCalc ini() {
         int token = -1;
         
-        String resultado = "";
-        ReferenciaCP ref = new ReferenciaCP(resultado, true);
+        double res = 0;
+        InterfaceCalc ref = new InterfaceCalc(res, true);
         
-        if((ref = E(ref.resultado)).flag){
-            token = lexic.obtener_token();
-            if (token == FIN) {
+        if((ref = E(ref.res)).flag){
+            token = lexic.getToken();
+            if (token == constCalculadora.END) {
                 ref.flag = true;
                 return ref;
             }
@@ -53,10 +39,10 @@ public class analizadorSintactico {
         return ref;
     }
 
-    public ReferenciaCP E(String resultado) {
-        ReferenciaCP ref = new ReferenciaCP(resultado, false);
-        if ((ref = T(ref.resultado)).flag) {
-            if ((ref = Ep(ref.resultado)).flag) {
+    public InterfaceCalc E(double res) {
+        InterfaceCalc ref = new InterfaceCalc(res, false);
+        if ((ref = T(ref.res)).flag) {
+            if ((ref = Ep(ref.res)).flag) {
                 ref.flag = true;
                 return ref;
             }
@@ -65,28 +51,28 @@ public class analizadorSintactico {
         return ref;
     }
 
-    public ReferenciaCP Ep(String resultado) {
-        ReferenciaCP ref = new ReferenciaCP(resultado, false);
+    public InterfaceCalc Ep(double res) {
+        InterfaceCalc ref = new InterfaceCalc(res, false);
         int token;
-        String resAux = "";
-        ReferenciaCP ref_2 = new ReferenciaCP(resAux, false);
-        token = lexic.obtener_token();
-        if (token == MAS) {
-            if ((ref_2 = T(ref_2.resultado)).flag) {
-                resultado = resultado + ref_2.resultado + "+";
-                ref.resultado = resultado;
-                if ((ref = Ep(ref.resultado)).flag) {
+        float resAux = 0;
+        InterfaceCalc ref_2 = new InterfaceCalc(resAux, false);
+        token = lexic.getToken();
+        if (token == constCalculadora.ADD) {
+            if ((ref_2 = T(ref_2.res)).flag) {
+                res += ref_2.res;
+                ref.res = res;
+                if ((ref = Ep(ref.res)).flag) {
                     ref.flag = true;
                     return ref;
                 }
             }
             ref.flag = false;
             return ref;
-        } else if (token == MENOS) {
-            if ((ref_2 = T(ref_2.resultado)).flag) {
-                resultado = resultado + ref_2.resultado + "-";
-                ref.resultado = resultado;
-                if ((ref = Ep(ref.resultado)).flag) {
+        } else if (token == constCalculadora.MIN) {
+            if ((ref_2 = T(ref_2.res)).flag) {
+                res -= ref_2.res;
+                ref.res = res;
+                if ((ref = Ep(ref.res)).flag) {
                     ref.flag = true;
                     return ref;
                 }
@@ -94,15 +80,15 @@ public class analizadorSintactico {
             ref.flag = false;
             return ref;
         }
-        lexic.regresarToken();
+        lexic.undoYylex();
         ref.flag = true;
         return ref;
     }
 
-    public ReferenciaCP T(String resultado) {
-        ReferenciaCP ref = new ReferenciaCP(resultado, false);
-        if ((ref = P(ref.resultado)).flag) {
-            if ((ref = Tp(ref.resultado)).flag) {
+    public InterfaceCalc T(double res) {
+        InterfaceCalc ref = new InterfaceCalc(res, false);
+        if ((ref = P(ref.res)).flag) {
+            if ((ref = Tp(ref.res)).flag) {
                 ref.flag = true;
                 return ref;
             }
@@ -111,17 +97,17 @@ public class analizadorSintactico {
         return ref;
     }
 
-    public ReferenciaCP Tp(String resultado) {
-        ReferenciaCP ref = new ReferenciaCP(resultado, false);
+    public InterfaceCalc Tp(double res) {
+        InterfaceCalc ref = new InterfaceCalc(res, false);
         int token;
-        String resAux = "";
-        ReferenciaCP ref_2 = new ReferenciaCP(resAux, false);
-        token = lexic.obtener_token();
-        if (token == PROD) {
-            if ((ref_2 = P(ref_2.resultado)).flag) {
-                resultado = resultado + ref_2.resultado + "*";
-                ref.resultado = resultado;
-                if ((ref = Tp(ref.resultado)).flag) {
+        float resAux = 0;
+        InterfaceCalc ref_2 = new InterfaceCalc(resAux, false);
+        token = lexic.getToken();
+        if (token == constCalculadora.PROD) {
+            if ((ref_2 = P(ref_2.res)).flag) {
+                res *= ref_2.res;
+                ref.res = res;
+                if ((ref = Tp(ref.res)).flag) {
                     ref.flag = true;
                     return ref;
                 }
@@ -129,25 +115,25 @@ public class analizadorSintactico {
             ref.flag = false;
             return ref;
         }
-        else if(token == DIV){
-            if ((ref_2 = P(ref_2.resultado)).flag) {
-                resultado = resultado + ref_2.resultado + "/";
-                ref.resultado = resultado;
-                if ((ref = Tp(ref.resultado)).flag) {
+        else if(token == constCalculadora.DIV){
+            if ((ref_2 = P(ref_2.res)).flag) {
+                res /= ref_2.res;
+                ref.res = res;
+                if ((ref = Tp(ref.res)).flag) {
                     ref.flag = true;
                     return ref;
                 }
             }
         }
-        lexic.regresarToken();
+        lexic.undoYylex();
         ref.flag = true;
         return ref;
     }
 
-    public ReferenciaCP P(String resultado) {
-        ReferenciaCP ref = new ReferenciaCP(resultado, false);
-        if ((ref = F(ref.resultado)).flag) {
-            if ((ref = Pp(ref.resultado)).flag) {
+    public InterfaceCalc P(double res) {
+        InterfaceCalc ref = new InterfaceCalc(res, false);
+        if ((ref = F(ref.res)).flag) {
+            if ((ref = Pp(ref.res)).flag) {
                 ref.flag = true;
                 return ref;
             }
@@ -156,17 +142,17 @@ public class analizadorSintactico {
         return ref;
     }
 
-    public ReferenciaCP Pp(String resultado) {
+    public InterfaceCalc Pp(double res) {
         int token;
-        String resAux = "";
-        ReferenciaCP ref = new ReferenciaCP(resultado, false);
-        ReferenciaCP ref_2 = new ReferenciaCP(resAux, false);
-        token = lexic.obtener_token();
-        if (token == POT) {
-            if ((ref_2 = F(ref_2.resultado)).flag) {
-                resultado = resultado + ref_2.resultado + "^";
-                ref.resultado = resultado;
-                if ((ref = Pp(ref.resultado)).flag) {
+        float resAux = 0;
+        InterfaceCalc ref = new InterfaceCalc(res, false);
+        InterfaceCalc ref_2 = new InterfaceCalc(resAux, false);
+        token = lexic.getToken();
+        if (token == constCalculadora.POWE) {
+            if ((ref_2 = F(ref_2.res)).flag) {
+                res = (float) Math.pow(res, ref_2.res);
+                ref.res = res;
+                if ((ref = Pp(ref.res)).flag) {
                     ref.flag = true;
                     return ref;
                 }
@@ -174,34 +160,34 @@ public class analizadorSintactico {
             ref.flag = false;
             return ref;
         }
-        lexic.regresarToken();
+        lexic.undoYylex();
         ref.flag = true;
         return ref;
     }
 
-    public ReferenciaCP F(String resultado) {
+    public InterfaceCalc F(double res) {
         int token;
-        token = lexic.obtener_token();
-        ReferenciaCP ref = new ReferenciaCP(resultado, false);
+        token = lexic.getToken();
+        InterfaceCalc ref = new InterfaceCalc(res, false);
         switch (token) {
-            case PAR_I:
-                if ((ref = E(ref.resultado)).flag) {
-                    token = lexic.obtener_token();
-                    if (token == PAR_D) {
+            case constCalculadora.PAR_I:
+                if ((ref = E(ref.res)).flag) {
+                    token = lexic.getToken();
+                    if (token == constCalculadora.PAR_D) {
                         ref.flag = true;
                         return ref;
                     }
                 }
                 ref.flag = false;
                 return ref;
-            case SIN:
-                token = lexic.obtener_token();
-                if (token == PAR_I) {
-                    if ((ref = E(ref.resultado)).flag) {
-                        token = lexic.obtener_token();
-                        if (token == PAR_D) {
-                            resultado = resultado + "sin()";
-                            ref.resultado = resultado;
+            case constCalculadora.SIN:
+                token = lexic.getToken();
+                if (token == constCalculadora.PAR_I) {
+                    if ((ref = E(ref.res)).flag) {
+                        token = lexic.getToken();
+                        if (token == constCalculadora.PAR_D) {
+                            res = (float) Math.sin(res);
+                            ref.res = res;
                             ref.flag = true;
                             return ref;
                         }
@@ -209,14 +195,14 @@ public class analizadorSintactico {
                 }
                 ref.flag = false;
                 return ref;
-            case COS:
-                token = lexic.obtener_token();
-                if (token == PAR_I) {
-                    if ((ref = E(ref.resultado)).flag) {
-                        token = lexic.obtener_token();
-                        if (token == PAR_D) {
-                            resultado = resultado + "cos()";
-                            ref.resultado = resultado;
+            case constCalculadora.COS:
+                token = lexic.getToken();
+                if (token == constCalculadora.PAR_I) {
+                    if ((ref = E(ref.res)).flag) {
+                        token = lexic.getToken();
+                        if (token == constCalculadora.PAR_D) {
+                            res = (float) Math.cos(res);
+                            ref.res = res;
                             ref.flag = true;
                             return ref;
                         }
@@ -224,14 +210,14 @@ public class analizadorSintactico {
                 }
                 ref.flag = false;
                 return ref;
-            case TAN:
-                token = lexic.obtener_token();
-                if (token == PAR_I) {
-                    if ((ref = E(ref.resultado)).flag) {
-                        token = lexic.obtener_token();
-                        if (token == PAR_D) {
-                            resultado = resultado + "tan()";
-                            ref.resultado = resultado;
+            case constCalculadora.TAN:
+                token = lexic.getToken();
+                if (token == constCalculadora.PAR_I) {
+                    if ((ref = E(ref.res)).flag) {
+                        token = lexic.getToken();
+                        if (token == constCalculadora.PAR_D) {
+                            res = (float) Math.tan(res);
+                            ref.res = res;
                             ref.flag = true;
                             return ref;
                         }
@@ -239,14 +225,14 @@ public class analizadorSintactico {
                 }
                 ref.flag = false;
                 return ref;
-            case LN:
-                token = lexic.obtener_token();
-                if (token == PAR_I) {
-                    if ((ref = E(ref.resultado)).flag) {
-                        token = lexic.obtener_token();
-                        if (token == PAR_D) {
-                            resultado = resultado + "ln()";
-                            ref.resultado = resultado;
+            case constCalculadora.LN:
+                token = lexic.getToken();
+                if (token == constCalculadora.PAR_I) {
+                    if ((ref = E(ref.res)).flag) {
+                        token = lexic.getToken();
+                        if (token == constCalculadora.PAR_D) {
+                            res = (float) Math.log(res);
+                            ref.res = res;
                             ref.flag = true;
                             return ref;
                         }
@@ -254,14 +240,14 @@ public class analizadorSintactico {
                 }
                 ref.flag = false;
                 return ref;
-            case LOG:
-                token = lexic.obtener_token();
-                if (token == PAR_I) {
-                    if ((ref = E(ref.resultado)).flag) {
-                        token = lexic.obtener_token();
-                        if (token == PAR_D) {
-                            resultado = resultado + "log()";
-                            ref.resultado = resultado;
+            case constCalculadora.LOG:
+                token = lexic.getToken();
+                if (token == constCalculadora.PAR_I) {
+                    if ((ref = E(ref.res)).flag) {
+                        token = lexic.getToken();
+                        if (token == constCalculadora.PAR_D) {
+                            res = (float) Math.log10(res);
+                            ref.res = res;
                             ref.flag = true;
                             return ref;
                         }
@@ -269,12 +255,16 @@ public class analizadorSintactico {
                 }
                 ref.flag = false;
                 return ref;
-            case NUM:
-                ref.resultado = lexic.get_yytext();
+            case constCalculadora.NUM:
+                ref.res = Double.parseDouble(lexic.getLexeme()); //(?)
                 ref.flag = true;
                 return ref;
         }
         ref.flag = false;
         return ref;
+<<<<<<< HEAD
     }    */
+=======
+    }
+>>>>>>> 1145617a43a49df3eabf325f30091073ffb05a50
 }
